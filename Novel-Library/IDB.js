@@ -44,7 +44,7 @@ else {
 
   async function loadModule() {
 
-    var importObject = await import("itemDB.js");
+    var importObject = await import("/Novel-Library/itemDB.js");
 
     //TODO: remove debugging
     console.log('Module loaded');
