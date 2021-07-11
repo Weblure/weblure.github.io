@@ -779,6 +779,7 @@ textarea, input {
 
 .cardTile.cardHolder {
   width: 260px;
+  overflow-y: hidden;
 }
 .cardTile .card {
   height: 280px;
@@ -1749,7 +1750,7 @@ select-items div:hover, .same-as-selected {
   .cardTile .cardTitle {
     width: 145px;
     font-size: 16px;
-    height: 45px;
+    min-height: 45px;
   }
   .cardTile .cardTitle span {
     display: inline-block;
@@ -1776,14 +1777,13 @@ select-items div:hover, .same-as-selected {
 
   .cardTile .sourceLink {
     width: 145px;
-    height: 12px;
+    min-height: 12px;
     font-size: 12px;
   }
 
   .cardTile .cardImage {
     width: 145px;
     height: 145px;
-    margin-top: 40px;
     background-position: center 2px;
   }
 
