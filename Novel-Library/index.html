@@ -39,6 +39,7 @@
 
       var searchParams = "";
       var searchMessage = "";
+      var timeout;
 
       String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -139,6 +140,7 @@
 
           searchMessage = "Searching...";
           document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+          clearTimeout(timeout);
 
           for (i = 0; i < indexArray.length; i++) {
 
@@ -236,6 +238,7 @@
               // Iterate through the most common first chars for cursor.key and needle.
               for (var i = 0; i < length; ++i) {
                   var lwrKeyChar = lowerKey[i];
+                  clearTimeout(timeout);
 
                   if (lwrKeyChar !== lowerNeedle[i]) {
                       // The char at position i differs between the found key and needle being
