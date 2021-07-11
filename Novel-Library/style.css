@@ -537,11 +537,12 @@ textarea, input {
 }
 
 #searchErrorText {
-  position: absolute;
+  position: relative;
   display: block;
   text-align: center;
-  width: 500px;
-  left: calc(50% - 250px);
+  width: 100%;
+  margin: 0;
+  left: 0;
   font-size: 30px;
   font-family: "Josefin Sans";
   color: white;
