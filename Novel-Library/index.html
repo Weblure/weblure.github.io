@@ -341,20 +341,17 @@
         }
 
 
-        var sizeArray = ['scenario', 'story', 'lorebook'];
-        for (i = 0; i < sizeArray.length; i++) {
-          if (recipeObject.data.files[sizeArray[i]] === "") {
-            console.log(sizeArray[i] + " type not found. Splicing and resetting.");
-            sizeArray.splice(i, 1);
+        var novelArray = ['scenario', 'story', 'lorebook'];
+        for (i = 0; i < novelArray.length; i++) {
+          if (!recipeObject.data.files[novelArray[i]] || recipeObject.data.files[novelArray[i]] === "") {
+            console.log(novelArray[i] + " type not found. Splicing and resetting.");
+            novelArray.splice(i, 1);
             i = 0;
           }
-          else if((i + 1) == sizeArray.length) {
-            for (i = 0; i < sizeArray.length; i++) {
-              if (i == 0) {
-                dataArray.push("<a class='fileButton' href='#'>Download "+sizeArray[i].capitalize()+"</a>");
-              }
-              else if (sizeArray[i]) {
-                dataArray.push("<a class='fileButton' href='#'>Download "+sizeArray[i].capitalize()+"</a>");
+          else if((i + 1) == novelArray.length) {
+            for (i = 0; i < novelArray.length; i++) {
+              if (novelArray[i]) {
+                dataArray.push("<a class='fileButton' href='"+recipeObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
               }
             }
           }
@@ -654,11 +651,11 @@
 
         </div>
 
-        <!--<div class="resultOptions">
+        <div class="resultOptions">
 
           <div class="helpButton tooltip t-right" data-tooltip="Refresh database" id="helpButton" onclick="refreshDatabase();">&#10227;</div>
 
-        </div>-->
+        </div>
 
       </div>
 
