@@ -537,12 +537,14 @@ textarea, input {
 }
 
 #searchErrorText {
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  display: block;
+  text-align: center;
+  width: 500px;
+  left: calc(50% - 250px);
   font-size: 30px;
   font-family: "Josefin Sans";
   color: white;
-  padding-right: 50px;
 }
 
 .searchFoyer {
