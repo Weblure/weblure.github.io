@@ -698,7 +698,7 @@ textarea, input {
   position: relative;
   display: inline-block;
   width: 309px;
-  min-height: 62px;
+  min-height: 50px;
   color: white;
   font-size: 30px;
   font-family: "PT Sans Narrow", sans-serif;
@@ -710,7 +710,8 @@ textarea, input {
 .cardTitle span {
   display: inline-block;
   padding: 0 8px 0 8px;
-  padding-top: 10px;
+  padding-top: 3px;
+  padding-bottom: 4px;
 }
 .cardTitle span.source {
   padding-top: 20px;
