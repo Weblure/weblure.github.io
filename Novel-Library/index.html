@@ -349,7 +349,7 @@
           }
           else {
             if (novelArray[i]) {
-              dataArray.push("<a class='fileButton' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
+              dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
             }
           }
         }
@@ -374,7 +374,6 @@
                 </div>
               </div>
               <div class="cardRight">
-                <div class="flasher"></div>
                 <div class="backCardTitle small">${novelName}</div>
                 <div class="drinkStickerContainer ${help_tooltip} ${help_center}" ${help_data2} id="${novelID}_right2">
                   <div class="modifiers" name="mods">${dataHTML}</div>
