@@ -325,15 +325,14 @@
               console.log("Duplicate skipped in loopNovelArray: "+displayedObjects[("n"+i)]);
               console.log(novelObjects[("novel" + i)]);
             }
-            if (searchTerms == "") {
-              count = Math.floor(Math.random() * Object.keys(novelObjects).length);
-            }
-            else {
-              count++;
-            }
+            count++;
           }
-
-          i++;
+          if (searchTerms == "") {
+            i = Math.floor(Math.random() * Object.keys(novelObjects).length);
+          }
+          else {
+            i++;
+          }
         }
 
         //var db = openRequest.result;
