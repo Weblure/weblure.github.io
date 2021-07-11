@@ -78,7 +78,7 @@
            console.log("appendNovel ERROR: no count param");
          }
           else if (count == appendCount) {
-            ///console.log("Counts matched; committing to HTML");
+            console.log("Counts matched; committing to HTML");
             searchMessage = "";
             document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
@@ -94,7 +94,7 @@
           if (!novelObjects[novelID]) {
             ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
-            ///console.log("Added new novel to novelObjects");
+            console.log("Added new novel to novelObjects");
             ///console.log(object);
           }
           else {
