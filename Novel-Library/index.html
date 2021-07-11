@@ -71,26 +71,26 @@
       function appendNovel(object, count) {
         if (!object) {
           if (!count)
-           console.log("appendNovel ERROR: no count param");
+           ///console.log("appendNovel ERROR: no count param");
           else if (count == appendCount) {
-            console.log("Counts matched; committing to HTML");
+            ///console.log("Counts matched; committing to HTML");
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
-            console.log("Count mismatched; aborting."); //When will this ever happen?
+            ///console.log("Count mismatched; aborting."); //When will this ever happen?
           }
         }
         else {
           ++appendCount; //Is there a point to this?
           if (!(object.id in novelObjects) === true) {
             var novelID = "novel" + object.id;
-            console.log(novelObjects[novelID]);
+            ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
-            console.log("Added new novel to novelObjects");
-            console.log(object);
+            ///console.log("Added new novel to novelObjects");
+            ///console.log(object);
           }
           else {
-            console.log("Skipping duplicate novel.");
+            ///console.log("Skipping duplicate novel.");
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
@@ -123,10 +123,10 @@
         }
 
 
-        console.log(searchParams);
+        ///console.log(searchParams);
         searchParams = searchParams.split(" ");
 
-        console.log("►" + searchParams);
+        ///console.log("►" + searchParams);
 
         loopSearchAlgorithm(searchParams);
 
@@ -134,12 +134,12 @@
 
           for (i = 0; i < indexArray.length; i++) {
 
-            console.log("<index> " + indexArray[i]);
+            ///console.log("<index> " + indexArray[i]);
             index = trans.objectStore("novels").index(indexArray[i]);
 
             for (int = 0; int < params.length; int++) {
 
-              console.log("<params> " + params[int]);
+              ///console.log("<params> " + params[int]);
               findIgnoreCaseAlgorithm(index, params[int], appendNovel, nullFunction);
 
             }
@@ -180,11 +180,11 @@
 
             var lowerKey;
             if (key.constructor === Array) {
-              console.log(key);
-              console.log(lowerNeedle);
+              ///console.log(key);
+              ///console.log(lowerNeedle);
 
               if (key.indexOf(lowerNeedle) !== -1) {
-                  console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
+                  ///console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
                   onfound(cursor.value); // Notify caller we found something
                   cursor.continue(); // Check next record, it might match too!
               }
@@ -196,11 +196,11 @@
             }
             else {
              lowerKey = key.toLowerCase();
-             console.log(">" + key);
-             console.log(">>" + lowerNeedle);
+             ///console.log(">" + key);
+             ///console.log(">>" + lowerNeedle);
 
               if (lowerKey.indexOf(lowerNeedle) !== -1) {
-                  console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
+                  ///console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
                   onfound(cursor.value); // Notify caller we found something
                   cursor.continue(); // Check next record, it might match too!
               } else {/*
@@ -208,7 +208,7 @@
                   var nextNeedle = nextCasing(key, lowerKey, upperNeedle, lowerNeedle); //WHAT IS THE POINT OF CALLING THIS?
                   //IT'S ALREADY COMPARING THE LOWERCASED KEY TO THE LOWERCASED NEEDLE, WHY IS THIS FUNCTION EVEN NEEDED?
                   if (nextNeedle) {
-                      console.log(">>>" + nextNeedle);
+                      ///console.log(">>>" + nextNeedle);
                       cursor.continue(nextNeedle);
                   } else {
                       // No more possible case combinations to look for.
@@ -286,13 +286,13 @@
 
       function loopNovelArray() {
 
-        console.log("Running loopNovelArray");
+        ///console.log("Running loopNovelArray");
         var i = 1;
         var count = 0;
-        console.log(Object.keys(novelObjects).length);
+        ///console.log(Object.keys(novelObjects).length);
         while (Object.keys(novelObjects).length > count) {
           if (novelObjects[("novel" + i)]) {
-            console.log("Looping recipe object: " + i);
+            ///console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
             count++
           }
@@ -301,14 +301,14 @@
 
         //var db = openRequest.result;
         //db.close(); //Done searching the database; close it to prevent jamming.
-        //console.log("IDB request closed: search concluded.")
+        /////console.log("IDB request closed: search concluded.")
       }
 
       var firstNovelID = "";
 
       function insertNovelCard(novelObject) {
 
-        console.log(openRequest);
+        ///console.log(openRequest);
 
         var novelID = "novel" + novelObject.id;
         var novelName = novelObject.name;
@@ -350,7 +350,7 @@
         var novelArray = ['scenario', 'story', 'lorebook'];
         for (i = 0; i < novelArray.length; i++) {
           if (!novelObject.data.files[novelArray[i]] || novelObject.data.files[novelArray[i]] === "") {
-            console.log(novelArray[i] + " type not found.");
+            ///console.log(novelArray[i] + " type not found.");
           }
           else {
             if (novelArray[i]) {
@@ -401,7 +401,7 @@
       //Change recipe to match size modification
       function adjustRecipe(novelID, size) {
 
-        console.log(novelID + " | " + size);
+        ///console.log(novelID + " | " + size);
 
         document.getElementById(novelID).querySelector('.flasher').classList.add('animate');
         setTimeout(function(){document.getElementById(novelID).querySelector('.flasher').classList.remove('animate');}, 310);
@@ -588,7 +588,7 @@
          if (cardsOnScreen < 1) { cardsOnScreen = 1; }
          if (cardsOnScreen > totalCardCount) { cardsOnScreen = totalCardCount; }
 
-         //console.log(width + " | " + cardSize + " | " + cardsOnScreen + " | " + totalCardCount);
+         /////console.log(width + " | " + cardSize + " | " + cardsOnScreen + " | " + totalCardCount);
 
          /*
          (Screen Width - Card Size x3 - Text Margin x2 - Set Margin x3)/2
@@ -603,7 +603,7 @@
       function searchListener() {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
-          console.log("Enter press detected.");
+          ///console.log("Enter press detected.");
           // Cancel the default action, if needed
           event.preventDefault();
           // Trigger the button element with a click
@@ -623,7 +623,7 @@
       function refreshDatabase() {
         var db = openRequest.result;
         db.close();
-        console.log("IDB request closed: refreshing database.")
+        ///console.log("IDB request closed: refreshing database.")
         location.reload();
       }
 
