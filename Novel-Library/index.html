@@ -308,6 +308,9 @@
 
         console.log("Running loopNovelArray");
         var i = 1;
+        if (searchTerms == "") {
+          i = Math.floor(Math.random() * Object.keys(novelObjects).length);
+        }
         var count = 0;
         ///console.log(Object.keys(novelObjects).length);
         if (!novelObjects || Object.keys(novelObjects).length == 0) {
@@ -327,12 +330,8 @@
             }
             count++;
           }
-          if (searchTerms == "") {
-            i = Math.floor(Math.random() * Object.keys(novelObjects).length);
-          }
-          else {
-            i++;
-          }
+
+          i++;
         }
 
         //var db = openRequest.result;
