@@ -13,15 +13,19 @@ else {
   var upgradeNeeded = false;
   var clearNeeded = false;
   var IDBerror = false;
+  var IDBjam = true;
 
   var openRequest = indexedDB.open('itemDatabase'); //Open the IDB without updating
   console.log(openRequest);
   var initGlobalDB;
 
-  setTimeout(requestTimeout, 2500);
+  setTimeout(requestTimeout, 20000);
   function requestTimeout() {
     //var db = openRequest.result;
-    //db.close(); //Force request to close to prevent jamming.
+    if (IDBjam == true) {
+      initGlobalDB.close(); //Force request to close to prevent jamming.
+      console.log("Force-closing IDB to prevent jamming.");
+    }
     //console.log("IDB request closed; timeout reached.")
     if (clearNeeded == true) {
 
@@ -33,6 +37,7 @@ else {
   openRequest.onsuccess = function(e) {
     console.log('Running initial onSuccess');
     initGlobalDB = openRequest.result;
+    IDBjam = false;
 
     console.log(openRequest);
     console.log(initGlobalDB.version);
