@@ -768,8 +768,8 @@ textarea, input {
 .cardDescription {
   display: block;
   width: 295px;
-  height: 178px;
   padding: 7px;
+  background-color: #4d4f5d;
   color: white;
   font-size: 18px;
   font-family: "PT Sans Narrow", sans-serif;
