@@ -6,7 +6,7 @@ if (!window.indexedDB) {
 
 else {
   //CAUTION: ALWAYS UPDATE recipeDB.js FIRST
-  var dbVer = 8; //IDB Version (int only)
+  var dbVer = 9; //IDB Version (int only)
   var recipeObject; //instantiate global variable for module object import
   var recipeArray = []; //instantiate global array for module import
   var recipeDBver; //instantiate global variable for actual database version (TODO: implement version checking)
@@ -23,9 +23,7 @@ else {
   function requestTimeout() {
     //var db = openRequest.result;
     if (IDBjam == true) {
-      initGlobalDB.close(); //Force request to close to prevent jamming.
-      db.close();
-      console.log("Force-closing IDB to prevent jamming.");
+      alert("Your IDB may be jammed in an unusable state. Please close and reopen your browser. If that does not fix the problem, try restarting your computer. If the problem still persists, please contact @Feril#6555 on Discord.")
     }
     //console.log("IDB request closed; timeout reached.")
     if (clearNeeded == true) {
@@ -107,6 +105,7 @@ else {
       if (!db.objectStoreNames.contains('novels')) {
         var storeOS = db.createObjectStore('novels', {keyPath: 'id'});
         storeOS.createIndex('name', 'name', { unique: false });
+        storeOS.createIndex('author', 'author', { unique: false });
         storeOS.createIndex('type', 'type', { unique: false });
         storeOS.createIndex('subtype', 'subtype', { unique: false });
         storeOS.createIndex('tags', 'tags', { unique: false });
