@@ -308,6 +308,9 @@
         var i = 1;
         var count = 0;
         ///console.log(Object.keys(novelObjects).length);
+        if (Object.keys(novelObjects).length == 0) {
+          searchMessage = "No results found.";
+        }
         while (Object.keys(novelObjects).length > count && count < 50) {
           searchMessage = "";
           count++;
