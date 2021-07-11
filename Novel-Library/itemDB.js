@@ -8,7 +8,7 @@ export default
       "nameLength": "small",
       "imageUrl": "",
       "pumpType": "",
-      "nsfw": "true"
+      "nsfw": "true",
       "type": "scenario",
       "subtype": "3rd",
       "tags": ["goose", "geese", "rat", "war", "military", "unlikely", "friendship", "gnurro"],
