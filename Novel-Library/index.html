@@ -55,16 +55,16 @@
 
       }
 
-      //Drink Recipe Objects
-      var drinkObjects = {};
+      //novel Recipe Objects
+      var novelObjects = {};
 
       var appendCount = 0;
       var timeout;
       //TODO: Find a better alternative; you're literally fixing a race condition with a slightly better race condition
-      function appendDrink(object, count) {
+      function appendNovel(object, count) {
         if (!object) {
           if (!count)
-           console.log("appendDrink ERROR: no count param");
+           console.log("appendNovel ERROR: no count param");
           else if (count == appendCount) {
             console.log("Counts matched; committing to HTML");
             loopRecipeArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
@@ -75,20 +75,20 @@
         }
         else {
           ++appendCount; //Is there a point to this?
-          if (!(object.id in drinkObjects) === true) {
-            var drinkID = "drink" + object.id;
-            console.log(drinkObjects[drinkID]);
-            drinkObjects[drinkID] = object;
-            console.log("Added new drink to drinkObjects");
+          if (!(object.id in novelObjects) === true) {
+            var novelID = "novel" + object.id;
+            console.log(novelObjects[novelID]);
+            novelObjects[novelID] = object;
+            console.log("Added new novel to novelObjects");
             console.log(object);
           }
           else {
-            console.log("Skipping duplicate drink.");
+            console.log("Skipping duplicate novel.");
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
           clearTimeout(timeout);
-          timeout = setTimeout(appendDrink, 150, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
+          timeout = setTimeout(appendNovel, 150, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
         }
       }
 
@@ -100,8 +100,8 @@
 
         //var db = openRequest.result; //TODO: FIX: Race condition
 
-        // Start a transaction on the 'drinks' table
-        var trans = initGlobalDB.transaction(["drinks"], "readonly");
+        // Start a transaction on the 'novels' table
+        var trans = initGlobalDB.transaction(["novels"], "readonly");
 
         // Instantiate the index variable for searching multiple indexes.
         var index;
@@ -128,12 +128,12 @@
           for (i = 0; i < indexArray.length; i++) {
 
             console.log("<index> " + indexArray[i]);
-            index = trans.objectStore("drinks").index(indexArray[i]);
+            index = trans.objectStore("novels").index(indexArray[i]);
 
             for (int = 0; int < params.length; int++) {
 
               console.log("<params> " + params[int]);
-              findIgnoreCaseAlgorithm(index, params[int], appendDrink, nullFunction);
+              findIgnoreCaseAlgorithm(index, params[int], appendNovel, nullFunction);
 
             }
           }
@@ -277,46 +277,16 @@
           }
         };
 
-        /*db = openRequest.result;
-
-        // open a read/write db transaction, ready for retrieving the data
-        var transaction = db.transaction(["drinks"], "readonly");
-
-        // report on the success of the transaction completing, when everything is done
-        transaction.oncomplete = function(event) {
-          console.log('readDB transaction success');
-        };
-
-        transaction.onerror = function(event) {
-          console.log('readDB transaction error');
-        };
-
-        // create an object store on the transaction
-        var objectStore = transaction.objectStore("drinks");
-        console.log(objectStore);
-
-        // Make a request to get a record by key from the object store
-        var objectStoreRequest = objectStore.get(1);
-        console.log(objectStoreRequest);
-
-        objectStoreRequest.onsuccess = function(event) {
-          var myRecord = objectStoreRequest.result;
-          console.log(myRecord);
-          drinkObjects[0] = myRecord;
-          loopRecipeArray();
-        };*/
-
-
       function loopRecipeArray() {
 
         console.log("Running loopRecipeArray");
         var i = 1;
         var count = 0;
-        console.log(Object.keys(drinkObjects).length);
-        while (Object.keys(drinkObjects).length > count) {
-          if (drinkObjects[("drink" + i)]) {
+        console.log(Object.keys(novelObjects).length);
+        while (Object.keys(novelObjects).length > count) {
+          if (novelObjects[("novel" + i)]) {
             console.log("Looping recipe object: " + i);
-            insertRecipeCard(drinkObjects[("drink" + i)]);
+            insertRecipeCard(novelObjects[("novel" + i)]);
             count++
           }
           i++;
@@ -327,38 +297,35 @@
         //console.log("IDB request closed: search concluded.")
       }
 
-      var firstDrinkID = "";
+      var firstNovelID = "";
 
       function insertRecipeCard(recipeObject) {
 
         console.log(openRequest);
 
-        var drinkID = "drink" + recipeObject.id;
-        var drinkName = recipeObject.name;
-        var drinkSrcHTML = "";
+        var novelID = "novel" + recipeObject.id;
+        var novelName = recipeObject.name;
+        var novelSrcHTML = "";
         var imageURL = "placeholder.webp";
-        var drinkDescription = recipeObject.description;
-        var stickerMods = recipeObject.sticker.mods.grande;
+        var novelDescription = recipeObject.description;
         var titleClasses = "";
-        var sizeHTMLarray = [];
-        var help_tooltip = help_center = help_bottomleft = help_data1 = help_data2 = help_data3 = help_tile = "";
+        var dataArray = [];
+        var help_tooltip = help_center = help_bottomleft = help_data1 = help_tile = "";
 
-        if (firstDrinkID == "") {
-          firstDrinkID = drinkID;
+        if (firstNovelID == "") {
+          firstNovelID = novelID;
         }
 
-        if (firstDrinkID == drinkID) {
+        if (firstNovelID == novelID) {
           help_tooltip = "tooltip";
           help_tile = "helpTileTip";
           help_center = "t-center";
           help_bottomcenter = "t-bottom-center";
-          help_data1 = 'data-tooltip="Click to Show Recipe"';
-          help_data2 = 'data-tooltip="Select a Drink Size"';
-          help_data3 = 'data-tooltip="Show this Recipe to your Barista!"'
+          help_data1 = 'data-tooltip="Click to Show Files"';
         }
 
         if (recipeObject.source.type != "none") {
-          drinkSrcHTML = "<a href='" + recipeObject.source.url + "' class='sourceLink " + recipeObject.source.type + "' onClick='event.stopPropagation();'>" + recipeObject.source.name + "</a>"
+          novelSrcHTML = "<a href='" + recipeObject.source.url + "' class='sourceLink " + recipeObject.source.type + "' onClick='event.stopPropagation();'>" + recipeObject.source.name + "</a>"
           titleClasses = titleClasses + "source ";
         }
         if (recipeObject.nameLength == "long") {
@@ -371,59 +338,54 @@
           imageURL = recipeObject.imageUrl;
         }
 
-        if (recipeObject.pumpType == "CBS") {
-          syrupClass = syrupClass + "CBS";
-        }
 
-
-        var sizeArray = ['short', 'tall', 'grande', 'venti', 'trenta'];
+        var sizeArray = ['scenario', 'story', 'lorebook'];
         for (i = 0; i < sizeArray.length; i++) {
-          if (recipeObject.sticker.mods[sizeArray[i]] === "") {
-            console.log(sizeArray[i] + " size not found. Splicing and resetting.");
+          if (recipeObject.data.downloads[sizeArray[i]] === "") {
+            console.log(sizeArray[i] + " type not found. Splicing and resetting.");
             sizeArray.splice(i, 1);
             i = 0;
           }
           else if((i + 1) == sizeArray.length) {
             for (i = 0; i < sizeArray.length; i++) {
-              if (sizeArray[i] == 'grande') {
-                sizeHTMLarray.push(" <span></span> <div class=\"cardButton selected\" onClick=\"adjustRecipe('"+drinkID+"','grande'); this.classList.add('selected');\">Grande</div>");
-              }
-              else if (i == 0) {
-                sizeHTMLarray.push("<div class=\"cardButton\" onClick=\"adjustRecipe('"+drinkID+"','"+sizeArray[i]+"'); this.classList.add('selected');\">"+sizeArray[i].capitalize()+"</div>");
+              if (i == 0) {
+                dataArray.push("<a class='fileButton' href='#'>Download "+sizeArray[i].capitalize()+"</a>");
               }
               else if (sizeArray[i]) {
-                sizeHTMLarray.push(" <span></span> <div class=\"cardButton\" onClick=\"adjustRecipe('"+drinkID+"','"+sizeArray[i]+"'); this.classList.add('selected');\">"+sizeArray[i].capitalize()+"</div>");
+                dataArray.push("<a class='fileButton' href='#'>Download "+sizeArray[i].capitalize()+"</a>");
               }
             }
           }
         }
 
+        var dataHTML = dataArray.join();
+
 
 
 
         var cardHTML = `
-          <div class="cardHolder cardTile" id="${drinkID}_holder" onTouchTap="this.classList.toggle('touched');" onClick="this.classList.toggle('clicked');">
-            <div class="card" id="${drinkID}">
+          <div class="cardHolder cardTile" id="${novelID}_holder" onTouchTap="this.classList.toggle('touched');" onClick="this.classList.toggle('clicked');">
+            <div class="card" id="${novelID}">
 
               <div class="cardLeft">
-                <div class="cardTitle ${help_tooltip} ${help_tile} ${help_center}" ${help_data1} id="${drinkID}_left">
-                  <span class="${titleClasses}">${drinkName}</span>
+                <div class="cardTitle ${help_tooltip} ${help_tile} ${help_center}" ${help_data1} id="${novelID}_left">
+                  <span class="${titleClasses}">${novelName}</span>
                 </div>
-                ${drinkSrcHTML}
+                ${novelSrcHTML}
                 <div class="cardImage" style="background-image: url('${imageURL}');"></div>
                 <div class="cardDescription">
-                  ${drinkDescription}
+                  ${novelDescription}
                 </div>
               </div>
               <div class="cardRight">
                 <div class="flasher"></div>
-                <div class="backCardTitle small">${drinkName}</div>
-                <div class="drinkStickerContainer ${help_tooltip} ${help_center}" ${help_data3} id="${drinkID}_right2">
-                  <div class="modifiers" name="mods">${stickerMods}</div>
+                <div class="backCardTitle small">${novelName}</div>
+                <div class="drinkStickerContainer ${help_tooltip} ${help_center}" id="${novelID}_right2">
+                  <div class="modifiers" name="mods">${dataHTML}</div>
                 </div>
               </div>
             </div>
-            <div class="cardOverlay" onClick="event.stopPropagation(); this.classList.add('hidden'); focusCard('${drinkID}');"></div>
+            <div class="cardOverlay" onClick="event.stopPropagation(); this.classList.add('hidden'); focusCard('${novelID}');"></div>
           </div>
         `
 
@@ -437,17 +399,17 @@
 
 
       //Change recipe to match size modification
-      function adjustRecipe(drinkID, size) {
+      function adjustRecipe(novelID, size) {
 
-        console.log(drinkID + " | " + size);
+        console.log(novelID + " | " + size);
 
-        document.getElementById(drinkID).querySelector('.flasher').classList.add('animate');
-        setTimeout(function(){document.getElementById(drinkID).querySelector('.flasher').classList.remove('animate');}, 310);
+        document.getElementById(novelID).querySelector('.flasher').classList.add('animate');
+        setTimeout(function(){document.getElementById(novelID).querySelector('.flasher').classList.remove('animate');}, 310);
 
-        document.getElementById(drinkID).querySelector('[name="title"]').innerHTML = /*size.toUpperCase() + " " + */drinkObjects[drinkID].sticker.title;
-        document.getElementById(drinkID).querySelector('[name="mods"]').innerHTML = drinkObjects[drinkID].sticker.mods[size];
+        document.getElementById(novelID).querySelector('[name="title"]').innerHTML = /*size.toUpperCase() + " " + */novelObjects[novelID].sticker.title;
+        document.getElementById(novelID).querySelector('[name="mods"]').innerHTML = novelObjects[novelID].sticker.mods[size];
 
-        document.getElementById(drinkID).querySelector('.cardButton.selected').classList.remove('selected');
+        document.getElementById(novelID).querySelector('.cardButton.selected').classList.remove('selected');
 
       }
 
@@ -465,17 +427,17 @@
           document.getElementById("helpButton").classList.remove('helpHighlight');
           document.getElementById("headContainer").classList.remove('helpHighlight');
           document.getElementById("title").classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_holder"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_left"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_right"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_right2"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.remove('helpHighlight');
           document.getElementById("submitLink").classList.remove('helpObscure');
           document.getElementById("subtitle").classList.remove('helpObscure');
 
         }
 
         if (document.querySelector('.cardFocus')){
-          document.getElementById(firstDrinkID + "_left").classList.add('helpTileTip');
+          document.getElementById(firstNovelID + "_left").classList.add('helpTileTip');
           document.querySelector('.cardFocus').classList.add('cardTile');
           document.querySelector('.cardFocus').classList.remove('cardFocus');
           document.querySelector('.cardOverlay.hidden').classList.remove('hidden');
@@ -494,13 +456,13 @@
 
       }
 
-      function focusCard(drinkID) {
+      function focusCard(novelID) {
 
         document.getElementById("obscure").classList.remove('hidden');
         document.getElementById("resetDisplay").classList.remove('hidden');
-        document.getElementById(drinkID + "_holder").classList.remove('cardTile');
-        document.getElementById(drinkID + "_left").classList.remove('helpTileTip');
-        document.getElementById(drinkID + "_holder").classList.add('cardFocus');
+        document.getElementById(novelID + "_holder").classList.remove('cardTile');
+        document.getElementById(novelID + "_left").classList.remove('helpTileTip');
+        document.getElementById(novelID + "_holder").classList.add('cardFocus');
 
       }
 
@@ -515,10 +477,10 @@
           document.getElementById("helpButton").classList.remove('helpHighlight');
           document.getElementById("headContainer").classList.remove('helpHighlight');
           document.getElementById("title").classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_holder"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_left"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_right"]).classList.remove('helpHighlight');
-          document.getElementById([firstDrinkID+"_right2"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.remove('helpHighlight');
           document.getElementById("submitLink").classList.remove('helpObscure');
           document.getElementById("subtitle").classList.remove('helpObscure');
         }
@@ -533,10 +495,10 @@
           document.getElementById("helpButton").classList.add('helpHighlight');
           document.getElementById("headContainer").classList.add('helpHighlight');
           document.getElementById("title").classList.add('helpHighlight');
-          document.getElementById([firstDrinkID+"_holder"]).classList.add('helpHighlight');
-          document.getElementById([firstDrinkID+"_left"]).classList.add('helpHighlight');
-          document.getElementById([firstDrinkID+"_right"]).classList.add('helpHighlight');
-          document.getElementById([firstDrinkID+"_right2"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_right"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.add('helpHighlight');
           document.getElementById("submitLink").classList.add('helpObscure');
           document.getElementById("subtitle").classList.add('helpObscure');
 
@@ -589,10 +551,10 @@
         }
 
         if (document.querySelector('.helpTileTip')) {
-          document.getElementById(firstDrinkID + "_left").classList.remove('helpTileTip');
+          document.getElementById(firstNovelID + "_left").classList.remove('helpTileTip');
         }
         else {
-          document.getElementById(firstDrinkID + "_left").classList.add('helpTileTip');
+          document.getElementById(firstNovelID + "_left").classList.add('helpTileTip');
         }
 
         onresize();
@@ -654,7 +616,7 @@
         searchParams = inputText;
         initPage(inputText);
         readDB(true);
-        drinkObjects = {};
+        novelObjects = {};
         document.getElementById('cardContainer').innerHTML = "";
       }
 
@@ -671,7 +633,7 @@
 
     <div class="mainContainer">
 
-      <div class="searchBar tooltip t-top-left" data-tooltip="Search for a Drink by Name or Type" id="searchBar">
+      <div class="searchBar tooltip t-top-left" data-tooltip="Search for a Novel by Name or Type" id="searchBar">
 
         <input class="searchText" ID="searchField" type="text" placeholder="Search for a Novel!" onkeyup="searchListener();">
 

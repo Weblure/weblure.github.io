@@ -20,6 +20,9 @@ else {
     //var db = openRequest.result;
     //db.close(); //Force request to close to prevent jamming.
     //console.log("IDB request closed; timeout reached.")
+    if (clearNeeded == true) {
+
+    }
   }
 
   console.log("IDB.js running");
@@ -57,7 +60,7 @@ else {
       console.log("Database version mismatch; JSON version is newer than JS version. An update may be in progress. This error should self-correct.");
     }
     else if (recipeDBver != dbVer) {
-      alert("Database version mismatch detected. Your database may be corrupted or outdated. This can be corrected by clearing your browser's cache for this website.\nIf this message persists after clearing your cache, it's likely an issue on our end. Please email us at contact@superstarbux.com");
+      alert("Database version mismatch detected. Your database may be corrupted or outdated. This can be corrected by clearing your browser's cache for this website.\nIf this message persists after clearing your cache, it's likely an issue on our end. Please contact Feril#6555 on Discord.");
     }
     recipeArray = recipeObject.recipeArray;
     console.log(recipeArray);
@@ -83,8 +86,8 @@ else {
       };
 
 
-      if (!db.objectStoreNames.contains('drinks')) {
-        var storeOS = db.createObjectStore('drinks', {keyPath: 'id'});
+      if (!db.objectStoreNames.contains('novels')) {
+        var storeOS = db.createObjectStore('novels', {keyPath: 'id'});
         storeOS.createIndex('name', 'name', { unique: false });
         storeOS.createIndex('type', 'type', { unique: false });
         storeOS.createIndex('subtype', 'subtype', { unique: false });
@@ -123,9 +126,9 @@ else {
 
       var db = openRequest.result;
 
-      var transaction = db.transaction(["drinks"], "readwrite");
+      var transaction = db.transaction(["novels"], "readwrite");
 
-      var objectStore = transaction.objectStore("drinks");
+      var objectStore = transaction.objectStore("novels");
 
       var objectStoreRequest = objectStore.clear();
 
@@ -145,8 +148,8 @@ else {
 
     function addItem(curItem) {
       var db = openRequest.result;
-      var transaction = db.transaction(['drinks'], 'readwrite');
-      var store = transaction.objectStore('drinks');
+      var transaction = db.transaction(['novels'], 'readwrite');
+      var store = transaction.objectStore('novels');
       var item = curItem;
 
       var request = store.add(item);
