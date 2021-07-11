@@ -349,7 +349,7 @@
             novelArray.splice(i, 1);
             i = 0;
           }
-          else if((i + 1) == novelArray.length) {
+          else {
             for (i = 0; i < novelArray.length; i++) {
               if (novelArray[i]) {
                 dataArray.push("<a class='fileButton' href='"+recipeObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
