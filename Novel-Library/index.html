@@ -72,12 +72,14 @@
         if (!object) {
           if (!count)
            ///console.log("appendNovel ERROR: no count param");
+           null();
           else if (count == appendCount) {
             ///console.log("Counts matched; committing to HTML");
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
             ///console.log("Count mismatched; aborting."); //When will this ever happen?
+            null();
           }
         }
         else {
@@ -93,6 +95,7 @@
             ///console.log("Skipping duplicate novel.");
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
+            null();
           }
           clearTimeout(timeout);
           timeout = setTimeout(appendNovel, 150, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
@@ -351,6 +354,7 @@
         for (i = 0; i < novelArray.length; i++) {
           if (!novelObject.data.files[novelArray[i]] || novelObject.data.files[novelArray[i]] === "") {
             ///console.log(novelArray[i] + " type not found.");
+            null();
           }
           else {
             if (novelArray[i]) {
