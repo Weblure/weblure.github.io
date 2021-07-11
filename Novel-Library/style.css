@@ -978,6 +978,14 @@ textarea, input {
   padding-left: 10px;
 }
 
+.fileButton {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: calc(100% - 40px;);
+  font-size: 30px;
+}
+
 
 
 .obscure {
