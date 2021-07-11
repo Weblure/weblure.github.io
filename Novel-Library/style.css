@@ -1043,7 +1043,7 @@ textarea, input {
   border-style: solid;
 }
 .tooltip::after {
-  background: #009266;
+  background: #4d4f5d;
   font-size: 19px;
   font-family: "PT Sans Narrow", sans-serif;
   font-weight: initial;
