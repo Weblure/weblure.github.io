@@ -381,14 +381,14 @@
         }
 
 
-        var novelArray = ['scenario', 'story', 'lorebook'];
+        var novelArray = ['scenario', 'story', 'lorebook', 'generationset'];
         for (i = 0; i < novelArray.length; i++) {
           if (!novelObject.data.files[novelArray[i]] || novelObject.data.files[novelArray[i]] === "") {
             ///console.log(novelArray[i] + " type not found.");
           }
           else {
             if (novelArray[i]) {
-              dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a>");
+              dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='files/"+novelObject.id+"-"+novelObject.name+"."+novelArray[i]+"'>Download "+novelArray[i].capitalize()+"</a>");
             }
           }
         }
@@ -666,7 +666,7 @@
 
     <div class="mainContainer">
 
-      <div class="searchBar tooltip t-top-left" data-tooltip="Type a name, type, or tag here" id="searchBar">
+      <div class="searchBar tooltip t-top-left" data-tooltip="Search by title, author, tag, or perspective" id="searchBar">
 
         <input class="searchText" ID="searchField" type="text" placeholder="Submit your search!" onkeyup="searchListener();">
 
