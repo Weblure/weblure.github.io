@@ -79,19 +79,26 @@
             ///console.log("Counts matched; committing to HTML");
             searchMessage = "";
             document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
-            loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
+            //loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
             console.log("Count mismatched; aborting."); //When will this ever happen?
           }
         }
         else {
-          searchMessage = "Displaying...";
-          ++appendCount; //Is there a point to this?
+          ++appendCount;
           var novelID = "novel" + object.id;
           if (!novelObjects[novelID]) {
             ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
+            if (appendCount < 50) {
+              insertNovelCard(novelObjects[novelID]);
+              searchMessage = "Displaying...";
+            }
+            else {
+              searchMessage = "";
+              document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+            }
             ///console.log("Added new novel to novelObjects");
             ///console.log(object);
           }
@@ -100,8 +107,8 @@
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
-          clearTimeout(timeout);
-          timeout = setTimeout(appendNovel, 350, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
+
+          //timeout = setTimeout(appendNovel, 350, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
         }
       }
 
@@ -140,7 +147,7 @@
 
           searchMessage = "Searching...";
           document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
-          clearTimeout(timeout);
+
 
           for (i = 0; i < indexArray.length; i++) {
 
@@ -238,7 +245,7 @@
               // Iterate through the most common first chars for cursor.key and needle.
               for (var i = 0; i < length; ++i) {
                   var lwrKeyChar = lowerKey[i];
-                  clearTimeout(timeout);
+
 
                   if (lwrKeyChar !== lowerNeedle[i]) {
                       // The char at position i differs between the found key and needle being
