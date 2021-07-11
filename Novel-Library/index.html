@@ -316,6 +316,9 @@
             console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
           }
+          else {
+            console.log("Duplicate skipped in loopNovelArray");
+          }
           i++;
         }
 
@@ -633,11 +636,11 @@
 
       function submitSearch() {
         var inputText = document.getElementById("searchField").value;
+        document.getElementById('cardContainer').innerHTML = "";
         searchParams = inputText;
         initPage(inputText);
-        readDB(true);
         novelObjects = {};
-        document.getElementById('cardContainer').innerHTML = "";
+        readDB(true);
       }
 
       function refreshDatabase() {
