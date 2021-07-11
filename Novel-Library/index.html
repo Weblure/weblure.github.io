@@ -46,7 +46,9 @@
       function initPage(searchTerms) {
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 100);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible patch
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 1000);
 
         if (searchTerms == "") {
           document.getElementById("searchField").placeholder = 'Showing all novels';
