@@ -83,9 +83,8 @@
         }
         else {
           ++appendCount; //Is there a point to this?
-          if (!(object.id in novelObjects) === true) {
-            var novelID = "novel" + object.id;
-            console.log(object.id in novelObjects);
+          var novelID = "novel" + object.id;
+          if (!novelObjects[novelID]) {
             ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
             ///console.log("Added new novel to novelObjects");
