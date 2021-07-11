@@ -47,7 +47,7 @@
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 100);
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible patch
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible ducktape solution
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 1000);
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 3000);
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 5000);
@@ -72,7 +72,7 @@
         if (!object) {
           if (!count) {
            ///console.log("appendNovel ERROR: no count param");
-          }
+         }
           else if (count == appendCount) {
             ///console.log("Counts matched; committing to HTML");
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
@@ -482,7 +482,7 @@
           document.getElementById([firstNovelID+"_left"]).classList.remove('helpHighlight');
           //document.getElementById([firstNovelID+"_right"]).classList.remove('helpHighlight');
           document.getElementById([firstNovelID+"_right2"]).classList.remove('helpHighlight');
-          document.getElementById("submitLink").classList.remove('helpObscure');
+          //document.getElementById("submitLink").classList.remove('helpObscure');
           document.getElementById("subtitle").classList.remove('helpObscure');
         }
 

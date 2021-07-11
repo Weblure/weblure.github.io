@@ -6,7 +6,7 @@ if (!window.indexedDB) {
 
 else {
   //CAUTION: ALWAYS UPDATE recipeDB.js FIRST
-  var dbVer = 6; //IDB Version (int only)
+  var dbVer = 7; //IDB Version (int only)
   var recipeObject; //instantiate global variable for module object import
   var recipeArray = []; //instantiate global array for module import
   var recipeDBver; //instantiate global variable for actual database version (TODO: implement version checking)
@@ -15,27 +15,27 @@ else {
   var IDBerror = false;
 
   var openRequest = indexedDB.open('itemDatabase'); //Open the IDB without updating
-  ///console.log(openRequest);
+  console.log(openRequest);
   var initGlobalDB;
 
   setTimeout(requestTimeout, 2500);
   function requestTimeout() {
     //var db = openRequest.result;
     //db.close(); //Force request to close to prevent jamming.
-    /////console.log("IDB request closed; timeout reached.")
+    //console.log("IDB request closed; timeout reached.")
     if (clearNeeded == true) {
 
     }
   }
 
-  ///console.log("IDB.js running");
+  console.log("IDB.js running");
 
   openRequest.onsuccess = function(e) {
-    ///console.log('Running initial onSuccess');
+    console.log('Running initial onSuccess');
     initGlobalDB = openRequest.result;
 
-    ///console.log(openRequest);
-    ///console.log(initGlobalDB.version);
+    console.log(openRequest);
+    console.log(initGlobalDB.version);
 
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
       dbErrorText += "Updating Database, please wait...<br>";
@@ -45,7 +45,7 @@ else {
   };
 
   openRequest.onerror = function(e) {
-    ///console.log('Initial Open Request ERROR');
+    console.log('Initial Open Request ERROR');
     dbErrorText += "IDB Open Request failed.<br>";
     IDBerror = true;
     console.dir(e);
@@ -57,12 +57,12 @@ else {
     var importObject = await import("/Novel-Library/itemDB.js");
 
     //TODO: remove debugging
-    ///console.log('Module loaded');
-    ///console.log(importObject);
+    console.log('Module loaded');
+    console.log(importObject);
     recipeObject = importObject.default;
-    ///console.log(recipeObject);
+    console.log(recipeObject);
     recipeDBver = recipeObject.recipeDBver;
-    ///console.log(recipeDBver);
+    console.log(recipeDBver);
     if (recipeDBver < dbVer) {
       IDBerror = true;
       dbErrorText += "Database version mismatch; JSON version is newer than JS version. An update may be in progress. This error should self-correct soon.<br>";
@@ -72,7 +72,7 @@ else {
       dbErrorText += "Database version mismatch detected. Your database may be corrupted or outdated. This can be corrected by clearing your browser's cache for this website. If this message persists after clearing your cache, it's likely an issue on our end. Please contact Feril#6555 on Discord.";
     }
     recipeArray = recipeObject.recipeArray;
-    ///console.log(recipeArray);
+    console.log(recipeArray);
 
     upgradeNeeded = true;
     initGlobalDB.close();
@@ -87,10 +87,10 @@ else {
     openRequest.onupgradeneeded = function(e) {
       var db = e.target.result;
 
-      ///console.log('Running onUpgradeNeeded');
+      console.log('Running onUpgradeNeeded');
 
       db.onerror = function(errorEvent) {
-        ///console.log("onUpgradeNeeded ERROR");
+        console.log("onUpgradeNeeded ERROR");
         dbErrorText += "onUpgradeNeeded ERROR<br>"
         IDBerror = true;
         return;
@@ -111,10 +111,10 @@ else {
     };
 
     openRequest.onsuccess = function(e) {
-      ///console.log('Running onSuccess 2');
+      console.log('Running onSuccess 2');
 
-      ///console.log('IDB Upgrade Needed: ' + upgradeNeeded);
-      ///console.log('IDB Clear Needed: ' + clearNeeded);
+      console.log('IDB Upgrade Needed: ' + upgradeNeeded);
+      console.log('IDB Clear Needed: ' + clearNeeded);
       db = e.target.result;
       if (clearNeeded == true) {
         clearData();
@@ -128,7 +128,7 @@ else {
     };
 
     openRequest.onerror = function(e) {
-      ///console.log('Open Request 2 ERROR');
+      console.log('Open Request 2 ERROR');
       IDBerror = true;
       dbErrorText += "IDB Open Request 2 Failed.<br>";
       console.dir(e);
@@ -146,14 +146,14 @@ else {
       var objectStoreRequest = objectStore.clear();
 
       objectStoreRequest.onerror = function(e) {
-        ///console.log('Error clearing data. ', e.target.error.name);
+        console.log('Error clearing data. ', e.target.error.name);
         IDBerror = true;
         dbErrorText += "Error clearing data from IDB.<br>";
         console.dir(e);
       };
 
       objectStoreRequest.onsuccess = function(e) {
-        ///console.log('Data cleared successfully.')
+        console.log('Data cleared successfully.')
         for (var i = 0; i < recipeArray.length; i++) {
           addItem(recipeArray[i]);
         }
@@ -170,13 +170,13 @@ else {
       var request = store.add(item);
 
       request.onerror = function(e) {
-        ///console.log('Error', e.target.error.name);
+        console.log('Error', e.target.error.name);
         IDBerror = true;
         dbErrorText += "An error occurred while updating your IDB. Your database may be corrupted. Please clear your cache and reload. If this problem persists, contact Feril#6555 on Discord.<br>";
         console.dir(e);
       };
       request.onsuccess = function(e) {
-        ///console.log('Item added: ' + curItem.name);
+        console.log('Item added: ' + curItem.name);
       };
     }
 
