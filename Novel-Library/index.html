@@ -71,27 +71,28 @@
       function appendNovel(object, count) {
         if (!object) {
           if (!count) {
-           ///console.log("appendNovel ERROR: no count param");
+           console.log("appendNovel ERROR: no count param");
          }
           else if (count == appendCount) {
             ///console.log("Counts matched; committing to HTML");
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
-            ///console.log("Count mismatched; aborting."); //When will this ever happen?
+            console.log("Count mismatched; aborting."); //When will this ever happen?
           }
         }
         else {
           ++appendCount; //Is there a point to this?
           if (!(object.id in novelObjects) === true) {
             var novelID = "novel" + object.id;
+            console.log(object.id in novelObjects);
             ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
             ///console.log("Added new novel to novelObjects");
             ///console.log(object);
           }
           else {
-            ///console.log("Skipping duplicate novel.");
+            console.log("Skipping duplicate novel.");
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
