@@ -315,7 +315,7 @@
           searchMessage = "";
           count++;
           if (novelObjects[("novel" + i)] && !displayedObjects[("n"+i)]) {
-            displayedObjects[("n"+i)] = i;
+            displayedObjects[("n"+i)] = "n"+i;
             console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
           }
