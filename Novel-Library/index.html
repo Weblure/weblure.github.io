@@ -69,7 +69,7 @@
            console.log("appendNovel ERROR: no count param");
           else if (count == appendCount) {
             console.log("Counts matched; committing to HTML");
-            loopRecipeArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
+            loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
             console.log("Count mismatched; aborting."); //When will this ever happen?
@@ -279,16 +279,16 @@
           }
         };
 
-      function loopRecipeArray() {
+      function loopNovelArray() {
 
-        console.log("Running loopRecipeArray");
+        console.log("Running loopNovelArray");
         var i = 1;
         var count = 0;
         console.log(Object.keys(novelObjects).length);
         while (Object.keys(novelObjects).length > count) {
           if (novelObjects[("novel" + i)]) {
             console.log("Looping recipe object: " + i);
-            insertRecipeCard(novelObjects[("novel" + i)]);
+            insertNovelCard(novelObjects[("novel" + i)]);
             count++
           }
           i++;
@@ -301,15 +301,15 @@
 
       var firstNovelID = "";
 
-      function insertRecipeCard(recipeObject) {
+      function insertNovelCard(novelObject) {
 
         console.log(openRequest);
 
-        var novelID = "novel" + recipeObject.id;
-        var novelName = recipeObject.name;
+        var novelID = "novel" + novelObject.id;
+        var novelName = novelObject.name;
         var novelSrcHTML = "";
         var imageURL = "placeholder.webp";
-        var novelDescription = recipeObject.description;
+        var novelDescription = novelObject.description;
         var titleClasses = "";
         var dataArray = [];
         var help_tooltip = help_center = help_bottomleft = help_data1 = help_tile = "";
@@ -327,38 +327,35 @@
           help_data2 = 'data-tooltip="Click the files you want to download."';
         }
 
-        if (recipeObject.source.type != "none") {
-          novelSrcHTML = "<a href='" + recipeObject.source.url + "' class='sourceLink " + recipeObject.source.type + "' onClick='event.stopPropagation();'>" + recipeObject.source.name + "</a>"
+        if (novelObject.source.type != "none") {
+          novelSrcHTML = "<a href='" + novelObject.source.url + "' class='sourceLink " + novelObject.source.type + "' onClick='event.stopPropagation();'>" + novelObject.source.name + "</a>"
           titleClasses = titleClasses + "source ";
         }
-        if (recipeObject.nameLength == "long") {
+        if (novelObject.nameLength == "long") {
           titleClasses = titleClasses + "small ";
         }
-        if (recipeObject.nameLength == "double") {
+        if (novelObject.nameLength == "double") {
           titleClasses = titleClasses + "small doubleLine ";
         }
-        if (recipeObject.imageUrl) {
-          imageURL = recipeObject.imageUrl;
+        if (novelObject.imageUrl) {
+          imageURL = novelObject.imageUrl;
         }
 
 
         var novelArray = ['scenario', 'story', 'lorebook'];
         for (i = 0; i < novelArray.length; i++) {
-          if (!recipeObject.data.files[novelArray[i]] || recipeObject.data.files[novelArray[i]] === "") {
-            console.log(novelArray[i] + " type not found. Splicing and resetting.");
-            novelArray.splice(i, 1);
+          if (!novelObject.data.files[novelArray[i]] || novelObject.data.files[novelArray[i]] === "") {
+            console.log(novelArray[i] + " type not found.");
             i = 0;
           }
           else {
-            for (i = 0; i < novelArray.length; i++) {
-              if (novelArray[i]) {
-                dataArray.push("<a class='fileButton' href='"+recipeObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
-              }
+            if (novelArray[i]) {
+              dataArray.push("<a class='fileButton' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a><br>");
             }
           }
         }
 
-        var dataHTML = dataArray.join();
+        var dataHTML = dataArray.join('');
 
 
 
