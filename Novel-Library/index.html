@@ -98,7 +98,7 @@
             ///console.log(object);
           }
           else {
-            console.log("Skipping duplicate novel.");
+            console.log("Skipping duplicate novel: " + novelID);
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
@@ -128,6 +128,10 @@
         }
         else {
           indexArray = ["name", "type", "subtype", "tags"];
+        }
+
+        if (searchParams = "") {
+          indexArray = ["name"];
         }
 
 
@@ -306,7 +310,7 @@
         ///console.log(Object.keys(novelObjects).length);
         while (Object.keys(novelObjects).length > count && count < 50) {
           searchMessage = "";
-          count++
+          count++;
           if (novelObjects[("novel" + i)] && !displayedObjects[i]) {
             displayedObjects[i] = i;
             console.log("Looping recipe object: " + i);
