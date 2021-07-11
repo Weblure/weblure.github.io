@@ -980,10 +980,15 @@ textarea, input {
 
 .fileButton {
   position: relative;
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-right: 8px;
   text-align: center;
-  width: calc(100% - 40px;);
+  width: calc(100% - 40px);
   font-size: 30px;
+  background: #4d4f5d;
+  border-radius: 30px;
 }
 
 
