@@ -31,6 +31,13 @@ else {
     }
   }
 
+  function reloadPage() {
+    if (IDBerror == false) {
+      location.reload();
+    }
+  }
+  var timeout;
+
   console.log("IDB.js running");
 
   openRequest.onsuccess = function(e) {
@@ -43,9 +50,9 @@ else {
 
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
       dbErrorText += "Updating Database, this may take a minute...<br>";
+      document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+      timeout = setTimeout(reloadPage, 1500); //TODO: FIX: Race condition
       loadModule();
-      setTimeout(function() { if (IDBerror == false) location.reload(); }, 25000);
-      setTimeout(function() { location.reload(); }, 30000);
     }
   };
 
@@ -182,7 +189,9 @@ else {
         console.dir(e);
       };
       request.onsuccess = function(e) {
+        clearTimeout(timeout);
         console.log('Item added: ' + curItem.name);
+        timeout = setTimeout(reloadPage, 1500); //TODO: FIX: Race condition
       };
     }
 
