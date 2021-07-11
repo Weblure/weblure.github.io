@@ -24,6 +24,7 @@ else {
     //var db = openRequest.result;
     if (IDBjam == true) {
       initGlobalDB.close(); //Force request to close to prevent jamming.
+      db.close();
       console.log("Force-closing IDB to prevent jamming.");
     }
     //console.log("IDB request closed; timeout reached.")
