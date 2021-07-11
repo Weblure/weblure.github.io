@@ -100,7 +100,7 @@
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
           clearTimeout(timeout);
-          timeout = setTimeout(appendNovel, 150, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
+          timeout = setTimeout(appendNovel, 250, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
         }
       }
 
