@@ -953,7 +953,9 @@ textarea, input {
 }
 
 .drinkStickerContainer {
+  position: absolute;
   width: 100%;
+  top: 53px;
   height: calc(100% - 0px);
   background: #212335;
 }
@@ -989,6 +991,8 @@ textarea, input {
   font-size: 30px;
   background: #4d4f5d;
   border-radius: 30px;
+  font-family: "PT Sans Narrow", sans-serif;
+  color: white;
 }
 
 
