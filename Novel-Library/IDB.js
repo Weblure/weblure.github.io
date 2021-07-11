@@ -37,7 +37,7 @@ else {
     console.log(initGlobalDB.version);
 
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
-      dbErrorText += "Updating Database, please wait..."
+      dbErrorText += "Updating Database, please wait...<br>"
       loadModule();
       setTimeout(function() { location.reload(); }, 3000);
     }
@@ -45,6 +45,7 @@ else {
 
   openRequest.onerror = function(e) {
     console.log('Initial Open Request ERROR');
+    dbErrorText += "IDB Open Request failed.<br>"
     console.dir(e);
   };
 
@@ -61,10 +62,10 @@ else {
     recipeDBver = recipeObject.recipeDBver;
     console.log(recipeDBver);
     if (recipeDBver < dbVer) {
-      console.log("Database version mismatch; JSON version is newer than JS version. An update may be in progress. This error should self-correct.");
+      dbErrorText += "Database version mismatch; JSON version is newer than JS version. An update may be in progress. This error should self-correct soon.<br>");
     }
     else if (recipeDBver != dbVer) {
-      alert("Database version mismatch detected. Your database may be corrupted or outdated. This can be corrected by clearing your browser's cache for this website.\nIf this message persists after clearing your cache, it's likely an issue on our end. Please contact Feril#6555 on Discord.");
+      dbErrorText += "Database version mismatch detected. Your database may be corrupted or outdated. This can be corrected by clearing your browser's cache for this website. If this message persists after clearing your cache, it's likely an issue on our end. Please contact Feril#6555 on Discord.";
     }
     recipeArray = recipeObject.recipeArray;
     console.log(recipeArray);
@@ -122,6 +123,7 @@ else {
 
     openRequest.onerror = function(e) {
       console.log('Open Request 2 ERROR');
+      dbErrorText += "IDB Open Request 2 Failed.<br>";
       console.dir(e);
     };
 
@@ -138,6 +140,7 @@ else {
 
       objectStoreRequest.onerror = function(e) {
         console.log('Error clearing data. ', e.target.error.name);
+        dbErrorText += "Error clearing data from IDB.<br>"
         console.dir(e);
       };
 
@@ -160,6 +163,7 @@ else {
 
       request.onerror = function(e) {
         console.log('Error', e.target.error.name);
+        dbErrorText += "An error occurred while updating your IDB. Your database may be corrupted. Please clear your cache and reload. If this problem persists, contact Feril#6555 on Discord."
         console.dir(e);
       };
       request.onsuccess = function(e) {
@@ -170,83 +174,3 @@ else {
   }
 
 }
-
-
-
-/*
-var request = window.indexedDB.open('databaseTest', 1);
-
-request.onerror = function (event) {
-  console.log('An IDB error occurred.');
-  console.log(event);
-};
-
-var db;
-
-request.onsuccess = function (event) {
-  db = request.result;
-
-  console.log('IDB successfully opened.');
-  console.log(db);
-};
-
-request.onupgradeneeded = function (event) {
-  db = event.target.result;
-  console.log(">>DB RESULT");
-  console.log(db);
-
-  db.onerror = function(event) {
-     console.log("IDB error");
-     console.log(event);
-     return;
-  };
-  db.onsuccess = function(event) {
-     console.log(">>IDB SUCCESS");
-     console.log(event);
-  };
-
-  var objectStore;
-  if (!db.objectStoreNames.contains('drink')) {
-    objectStore = db.createObjectStore('drink', {keyPath: 'id', autoIncrement: true});
-    objectStore.createIndex('name', 'name', { unique: true });
-    objectStore.createIndex('type', 'type', { unique: false });
-    objectStore.createIndex('tags', 'tags', { unique: false });
-  }
-}
-
-
-function add() {
-  var request = db.transaction(['drink'], 'readwrite')
-    .objectStore('drink')
-    .add({ id: 1, name: 'Pumpkin Spice', type: 'hot', tags: 'test' });
-
-  request.onsuccess = function (event) {
-    console.log('IDB data written successfully.');
-  };
-
-  request.onerror = function (event) {
-    console.log('IDB data failed to write.');
-  }
-}
-
-
-function read() {
-   var transaction = db.transaction(['drink']);
-   var objectStore = transaction.objectStore('drink');
-   var request = objectStore.get(1);
-
-   request.onerror = function(event) {
-     console.log('Transaction failed');
-   };
-
-   request.onsuccess = function( event) {
-      if (request.result) {
-        console.log('Drink: ' + request.result.drink);
-        console.log('Type: ' + request.result.type);
-        console.log('Tags: ' + request.result.tags);
-      } else {
-        console.log('No data record');
-      }
-   };
-}
-*/
