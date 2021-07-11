@@ -85,7 +85,7 @@
           }
         }
         else {
-          searchMessage = "Searching...";
+          searchMessage = "Displaying...";
           ++appendCount; //Is there a point to this?
           var novelID = "novel" + object.id;
           if (!novelObjects[novelID]) {
@@ -136,6 +136,8 @@
         loopSearchAlgorithm(searchParams);
 
         function loopSearchAlgorithm(params) {
+
+          searchMessage = "Searching...";
 
           for (i = 0; i < indexArray.length; i++) {
 
