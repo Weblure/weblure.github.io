@@ -38,6 +38,7 @@
     <script type="text/javascript">
 
       var searchParams = "";
+      var searchMessage = "";
 
       String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -46,11 +47,11 @@
       function initPage(searchTerms) {
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 100);
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible ducktape solution
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 1000);
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 3000);
-        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 5000);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 100);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible ducktape solution
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 1000);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 3000);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 5000);
 
         if (searchTerms == "") {
           document.getElementById("searchField").placeholder = 'Showing all novels';
@@ -75,6 +76,8 @@
          }
           else if (count == appendCount) {
             ///console.log("Counts matched; committing to HTML");
+            searchMessage = "";
+            document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
             loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
@@ -82,6 +85,7 @@
           }
         }
         else {
+          searchMessage = "Searching...";
           ++appendCount; //Is there a point to this?
           var novelID = "novel" + object.id;
           if (!novelObjects[novelID]) {
