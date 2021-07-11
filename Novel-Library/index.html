@@ -42,6 +42,7 @@
       var novelObjects = {};
       var displayedObjects = {};
       var timeout;
+      var firstNovelID = "";
 
       String.prototype.capitalize = function() {
         return this.charAt(0).toUpperCase() + this.slice(1);
@@ -50,8 +51,9 @@
       function initPage(searchTerms) {
         novelObjects = {};
         displayedObjects = {};
+        firstNovelID = "";
 
-        document.getElementById('searchErrorText').innerHTML = dbErrorText;
+        document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 100);
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible ducktape solution
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 1000);
@@ -334,7 +336,6 @@
         /////console.log("IDB request closed: search concluded.")
       }
 
-      var firstNovelID = "";
 
       function insertNovelCard(novelObject) {
 
