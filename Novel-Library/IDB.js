@@ -6,7 +6,7 @@ if (!window.indexedDB) {
 
 else {
   //CAUTION: ALWAYS UPDATE recipeDB.js FIRST
-  var dbVer = 5; //IDB Version (int only)
+  var dbVer = 6; //IDB Version (int only)
   var recipeObject; //instantiate global variable for module object import
   var recipeArray = []; //instantiate global array for module import
   var recipeDBver; //instantiate global variable for actual database version (TODO: implement version checking)
@@ -40,7 +40,7 @@ else {
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
       dbErrorText += "Updating Database, please wait...<br>";
       loadModule();
-      setTimeout(function() { if (IDBerror == false) location.reload(); }, 3000);
+      setTimeout(function() { if (IDBerror == false) location.reload(); }, 5000);
     }
   };
 
