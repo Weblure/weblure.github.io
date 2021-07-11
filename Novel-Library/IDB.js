@@ -38,9 +38,10 @@ else {
     console.log(initGlobalDB.version);
 
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
-      dbErrorText += "Updating Database, please wait...<br>";
+      dbErrorText += "Updating Database, this may take a minute...<br>";
       loadModule();
       setTimeout(function() { if (IDBerror == false) location.reload(); }, 5000);
+      setTimeout(function() { if (IDBerror == false) location.reload(); }, 30000);
     }
   };
 
