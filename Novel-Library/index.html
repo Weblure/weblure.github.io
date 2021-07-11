@@ -138,6 +138,7 @@
         function loopSearchAlgorithm(params) {
 
           searchMessage = "Searching...";
+          document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
 
           for (i = 0; i < indexArray.length; i++) {
 
