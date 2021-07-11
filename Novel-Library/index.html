@@ -39,7 +39,8 @@
 
       var searchParams = "";
       var searchMessage = "";
-      var displayedObjects = [];
+      var novelObjects = {};
+      var displayedObjects = {};
       var timeout;
 
       String.prototype.capitalize = function() {
@@ -47,7 +48,8 @@
       }
 
       function initPage(searchTerms) {
-        displayedObjects = [];
+        novelObjects = {};
+        displayedObjects = {};
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 100);
@@ -66,8 +68,6 @@
 
       }
 
-      //novel Recipe Objects
-      var novelObjects = {};
 
       var appendCount = 0;
       var timeout;
@@ -311,13 +311,14 @@
         while (Object.keys(novelObjects).length > count && count < 50) {
           searchMessage = "";
           count++;
-          if (novelObjects[("novel" + i)] && !displayedObjects[i]) {
-            displayedObjects[i] = i;
+          if (novelObjects[("novel" + i)] && !displayedObjects[("n"+i)]) {
+            displayedObjects[("n"+i)] = i;
             console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
           }
           else {
-            console.log("Duplicate skipped in loopNovelArray");
+            console.log("Duplicate skipped in loopNovelArray: "+displayedObjects[("n"+i)]);
+            //console.log(displayedObjects);
           }
           i++;
         }
@@ -639,7 +640,6 @@
         document.getElementById('cardContainer').innerHTML = "";
         searchParams = inputText;
         initPage(inputText);
-        novelObjects = {};
         readDB(true);
       }
 
