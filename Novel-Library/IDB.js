@@ -112,7 +112,7 @@ else {
       if (!db.objectStoreNames.contains('novels')) {
         var storeOS = db.createObjectStore('novels', {keyPath: 'id'});
         storeOS.createIndex('name', 'name', { unique: false });
-        storeOS.createIndex('author', 'author', { unique: false });
+        storeOS.createIndex('author', 'source.name', { unique: false });
         storeOS.createIndex('type', 'type', { unique: false });
         storeOS.createIndex('subtype', 'subtype', { unique: false });
         storeOS.createIndex('tags', 'tags', { unique: false });
