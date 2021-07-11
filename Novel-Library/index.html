@@ -311,10 +311,10 @@
         if (Object.keys(novelObjects).length == 0) {
           searchMessage = "No results found.";
         }
-        while (Object.keys(novelObjects).length > count && count < 50) {
+        while (Object.keys(novelObjects).length > count && i < 50) {
           searchMessage = "";
-          count++;
           if (novelObjects[("novel" + i)] && !displayedObjects[("n"+i)]) {
+            count++;
             displayedObjects[("n"+i)] = "n"+i;
             console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
