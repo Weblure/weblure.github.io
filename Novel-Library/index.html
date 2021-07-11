@@ -39,6 +39,7 @@
 
       var searchParams = "";
       var searchMessage = "";
+      var displayedObjects = [];
       var timeout;
 
       String.prototype.capitalize = function() {
@@ -46,6 +47,7 @@
       }
 
       function initPage(searchTerms) {
+        displayedObjects = [];
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 100);
@@ -79,26 +81,19 @@
             ///console.log("Counts matched; committing to HTML");
             searchMessage = "";
             document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
-            //loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
+            loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
           }
           else {
             console.log("Count mismatched; aborting."); //When will this ever happen?
           }
         }
         else {
-          ++appendCount;
+          searchMessage = "Displaying...";
+          ++appendCount; //Is there a point to this?
           var novelID = "novel" + object.id;
           if (!novelObjects[novelID]) {
             ///console.log(novelObjects[novelID]);
             novelObjects[novelID] = object;
-            if (appendCount < 50) {
-              insertNovelCard(novelObjects[novelID]);
-              searchMessage = "Displaying...";
-            }
-            else {
-              searchMessage = "";
-              document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
-            }
             ///console.log("Added new novel to novelObjects");
             ///console.log(object);
           }
@@ -107,8 +102,8 @@
             //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
             //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
           }
-
-          //timeout = setTimeout(appendNovel, 350, null, appendCount); //TODO: Technically a race condition, but unlikely to be encountered unless the client is very slow at processing. Should probably fix anyway.
+          clearTimeout(timeout);
+          timeout = setTimeout(appendNovel, 500, null, appendCount); //TODO: FIX: Race condition
         }
       }
 
@@ -147,7 +142,7 @@
 
           searchMessage = "Searching...";
           document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
-
+          clearTimeout(timeout);
 
           for (i = 0; i < indexArray.length; i++) {
 
@@ -169,6 +164,7 @@
         }
 
         function findIgnoreCaseAlgorithm(index, needle, onfound, onfinish) {
+          clearTimeout(timeout);
 
           // index: An instance of IDBIndex
           // needle: The string to search for
@@ -245,7 +241,7 @@
               // Iterate through the most common first chars for cursor.key and needle.
               for (var i = 0; i < length; ++i) {
                   var lwrKeyChar = lowerKey[i];
-
+                  clearTimeout(timeout);
 
                   if (lwrKeyChar !== lowerNeedle[i]) {
                       // The char at position i differs between the found key and needle being
@@ -304,12 +300,13 @@
 
       function loopNovelArray() {
 
-        ///console.log("Running loopNovelArray");
+        console.log("Running loopNovelArray");
         var i = 1;
         var count = 0;
         ///console.log(Object.keys(novelObjects).length);
         while (Object.keys(novelObjects).length > count && count < 50) {
           if (novelObjects[("novel" + i)]) {
+            displayedObjects[i] = i;
             ///console.log("Looping recipe object: " + i);
             insertNovelCard(novelObjects[("novel" + i)]);
             count++
