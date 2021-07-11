@@ -365,7 +365,7 @@
 
         if (novelObject.source.type != "none") {
           novelSrcHTML = "<a href='" + novelObject.source.url + "' class='sourceLink " + novelObject.source.type + "' onClick='event.stopPropagation();'>" + novelObject.source.name + "</a>"
-          titleClasses = titleClasses + "source ";
+          //titleClasses = titleClasses + "source ";
         }
         if (novelObject.nameLength == "long") {
           titleClasses = titleClasses + "small ";
@@ -400,10 +400,10 @@
             <div class="card" id="${novelID}">
 
               <div class="cardLeft">
+                ${novelSrcHTML}
                 <div class="cardTitle ${help_tooltip} ${help_tile} ${help_center}" ${help_data1} id="${novelID}_left">
                   <span class="${titleClasses}">${novelName}</span>
                 </div>
-                ${novelSrcHTML}
                 <div class="cardImage" style="background-image: url('${imageURL}');"></div>
                 <div class="cardDescription">
                   ${novelDescription}
