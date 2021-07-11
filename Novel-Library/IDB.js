@@ -1,3 +1,5 @@
+var dbErrorText = "";
+
 if (!window.indexedDB) {
     window.alert("Your browser doesn't support a stable version of IndexedDB, which is required for most functions of this website. For the best support, please use the latest version of Chrome, Firefox, or Safari.");
 }
@@ -35,7 +37,9 @@ else {
     console.log(initGlobalDB.version);
 
     if (initGlobalDB.version == "" || initGlobalDB.version < dbVer) {
+      dbErrorText += "Updating Database, please wait..."
       loadModule();
+      setTimeout(function() { location.reload(); }, 3000);
     }
   };
 

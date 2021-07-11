@@ -536,6 +536,13 @@ textarea, input {
   background-image: url("toggleLayout_icon_act2-small.png");
 }
 
+.searchErrorText {
+  position: relative;
+  display: inline-block;
+  font-size: 30px;
+  font-family: "Josefin Sans";
+}
+
 .searchFoyer {
   position: relative;
   width: 154px;

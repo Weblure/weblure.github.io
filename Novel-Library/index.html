@@ -44,7 +44,9 @@
       }
 
       function initPage(searchTerms) {
-        //var searchTerms = "<?php echo filter_input(INPUT_GET, 'search');?>";
+
+        document.getElementById('searchErrorText').innerHTML = dbErrorText;
+
         if (searchTerms == "") {
           document.getElementById("searchField").placeholder = 'Showing all novels';
         }
@@ -662,6 +664,8 @@
 
 
       <div class="cardContainer" id="cardContainer">
+
+        <div id="searchErrorText"></div>
 
       </div>
 
