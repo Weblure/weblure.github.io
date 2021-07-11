@@ -324,6 +324,7 @@
           help_center = "t-center";
           help_bottomcenter = "t-bottom-center";
           help_data1 = 'data-tooltip="Click to Show Files"';
+          help_data2 = 'data-tooltip="Click the files you want to download."';
         }
 
         if (recipeObject.source.type != "none") {
@@ -379,7 +380,7 @@
               <div class="cardRight">
                 <div class="flasher"></div>
                 <div class="backCardTitle small">${novelName}</div>
-                <div class="drinkStickerContainer ${help_tooltip} ${help_center}" id="${novelID}_right2">
+                <div class="drinkStickerContainer ${help_tooltip} ${help_center}" ${help_data2} id="${novelID}_right2">
                   <div class="modifiers" name="mods">${dataHTML}</div>
                 </div>
               </div>

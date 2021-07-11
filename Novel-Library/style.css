@@ -955,7 +955,7 @@ textarea, input {
 .drinkStickerContainer {
   width: 100%;
   height: calc(100% - 0px);
-  background: rgba(0,0,0,0.2);
+  background: #212335;
 }
 .drinkStickerContainer .drink {
   width: 100%;
