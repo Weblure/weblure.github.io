@@ -46,6 +46,7 @@
       function initPage(searchTerms) {
 
         document.getElementById('searchErrorText').innerHTML = dbErrorText;
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = dbErrorText; }, 500); //TODO: FIX: Race conditions
 
         if (searchTerms == "") {
           document.getElementById("searchField").placeholder = 'Showing all novels';
