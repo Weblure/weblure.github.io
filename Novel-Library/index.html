@@ -61,7 +61,7 @@
         setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 5000);
 
         if (searchTerms == "") {
-          document.getElementById("searchField").placeholder = 'Showing all novels';
+          document.getElementById("searchField").placeholder = 'Showing random novels';
         }
         else {
           searchTerms = searchTerms.replace(/_/g, ' ');
@@ -310,7 +310,7 @@
         var i = 1;
         var count = 0;
         ///console.log(Object.keys(novelObjects).length);
-        if (Object.keys(novelObjects).length == 0) {
+        if (!novelObjects || Object.keys(novelObjects).length == 0) {
           searchMessage = "No results found.";
         }
         while (Object.keys(novelObjects).length > count && count < 50) {
@@ -325,7 +325,12 @@
               console.log("Duplicate skipped in loopNovelArray: "+displayedObjects[("n"+i)]);
               console.log(novelObjects[("novel" + i)]);
             }
-            count++;
+            if (searchTerms == "") {
+              count = Math.floor(Math.random() * Object.keys(novelObjects).length);
+            }
+            else {
+              count++;
+            }
           }
 
           i++;
