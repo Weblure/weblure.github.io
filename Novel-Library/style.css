@@ -723,18 +723,15 @@ textarea, input {
   padding-top: 20px;
 }
 .cardTitle span.small {
-  padding-top: 15px;
   font-size: 25px;
 }
 .cardTitle span.small.doubleLine {
-  padding-top: 9px;
   line-height: 23px;
 }
 .cardTitle span.small.source {
   padding-top: 25px;
 }
 .cardTitle span.small.doubleLine.source {
-  padding-top: 22px;
   font-size: 20px;
 }
 .sourceLink {
@@ -1771,18 +1768,15 @@ select-items div:hover, .same-as-selected {
     padding-top: 24px;
   }
   .cardTile .cardTitle span.small {
-    padding-top: 13px;
     font-size: 15px;
   }
   .cardTile .cardTitle span.small.doubleLine {
-    padding-top: 8px;
     line-height: 15px;
   }
   .cardTile .cardTitle span.small.source {
     padding-top: 21px;
   }
   .cardTile .cardTitle span.small.doubleLine.source {
-    padding-top: 18px;
     font-size: 11px;
   }
 

@@ -1,6 +1,6 @@
 export default
 {
-  "recipeDBver": 11,
+  "recipeDBver": 12,
   "recipeArray": [
     {
       "id": 1,
@@ -38,7 +38,7 @@ export default
       "tags": ["Non-Human Protagonist", "Contemporary Setting", "Present Tense", "Unreliable Narrator", "Arrogant Narrator"],
       "description": "I am a crow. A crow I am. With nary a hint of self-doubt, I will bring my fellow wingmen and wingwomen to the spot we deserve on the foodchain. Absolute. Supremacy.",
       "source": {
-        "type": "",
+        "type": "none",
         "name": "",
         "url": ""
       },
