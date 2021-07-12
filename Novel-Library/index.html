@@ -26,8 +26,14 @@
 
     <div class="headContainer small" id="headContainer">
 
+      <a href="https://discord.gg/VKNZcRgjTt">
+        <div class="submitLink small" id="submitLink">
+          <span>Submit a Novel</span>
+        </div>
+      </a>
+
       <div class="titleContainer small">
-        <span class="title small tooltip t-bottom-right" data-tooltip="Click to Return to Homepage" id="title"><a href="/Novel-Library">Novel<span>&#128218;</span>Libary</a></span>
+        <span class="title small tooltip t-bottom-right" data-tooltip="Click to Return to Homepage" id="title"><a href="/Novel-Library">Novel<span>&#x1f56e;</span>Libary</a></span>
         </br>
         <span class="subtitle small" id="subtitle" style="width:300px;">Smells like old books.</span>
       </div>
@@ -385,7 +391,6 @@
         for (i = 0; i < novelArray.length; i++) {
           if (novelObject.data.files[novelArray[i]] === undefined) {
             console.log(novelArray[i] + " type not found.");
-            console.log(novelObject.data.files[novelArray[i]]);
           }
           else {
             if (novelArray[i]) {
