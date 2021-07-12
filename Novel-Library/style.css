@@ -595,6 +595,8 @@ textarea, input {
   transition: all .3s;
   border-radius: 4px;
   overflow: hidden;
+  display: inline-block;
+  margin: 0 5px 0 5px;
 }
 .resultOptions .layoutButton:hover,.resultOptions .helpButton:hover {
   background-color: #4d4f5d;
@@ -615,6 +617,7 @@ textarea, input {
   border-radius: 4px;
   overflow: hidden;
   margin: 0 5px 0 5px;
+  display: inline-block;
 }
 
 
