@@ -6,7 +6,7 @@ if (!window.indexedDB) {
 
 else {
   //CAUTION: ALWAYS UPDATE recipeDB.js FIRST
-  var dbVer = 12; //IDB Version (int only)
+  var dbVer = 13; //IDB Version (int only)
   var recipeObject; //instantiate global variable for module object import
   var recipeArray = []; //instantiate global array for module import
   var recipeDBver; //instantiate global variable for actual database version (TODO: implement version checking)
