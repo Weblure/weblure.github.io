@@ -1,0 +1,1855 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans:400,700|Ubuntu+Mono:400,700|PT+Sans+Narrow:400,700');
+
+/*Global Overrides*/
+HTML, BODY {
+  margin: 0;
+  background-color: #1a1c2e;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+body {
+  scrollbar-color: rgba(98,98,98,0.5) rgba(0,0,0,0.3);
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+  width: 0.9em;
+  border-radius: 100%;
+}
+
+body::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(98,98,98,0.5);
+  border-radius: 10px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(98,98,98,0.8);
+}
+
+
+textarea:focus, input:focus{
+    outline: none;
+    box-shadow: 0 0 0 3px #fff;
+}
+textarea, input {
+  border: none;
+}
+
+
+.Container404 {
+  width: 100%;
+  text-align: center;
+  min-height: calc(100% - 323px);
+  height: auto;
+  background: #4d4f5d;
+}
+.Container404 .error {
+  display: inline-block;
+  margin-top: 30px;
+  font-size: 125px;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+.Container404 .errDesc {
+  display: inline-block;
+  margin-top: 50px;
+  font-size: 22px;
+  font-family: "Josefin Sans", sans-serif;
+  color: white;
+}
+
+
+.legalContainer {
+  width: 100%;
+  text-align: center;
+  min-height: calc(100% - 270px - 60px);
+  background: #00573d;
+  padding: 10px 0 50px 0;
+}
+.legalConstainer {
+  display: inline-block;
+  width: 100%;
+  width: calc(100% - 20px);
+  max-width: 1000px;
+}
+.legalTitle {
+  margin-top: 20px;
+  font-size: 65px;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+.legalDate {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 19px;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+.legalHeader {
+  margin-top: 50px;
+  font-size: 30px;
+  font-family: "Ubuntu Mono", monospace;
+  color: white;
+}
+.legalBlock {
+  display: inline-block;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 19px;
+  font-family: "PT Sans Narrow", sans-serif;
+  text-align: justify;
+  color: white;
+}.legalBlock ol {
+  text-align: left;
+  font-size: 18px;
+}.legalBlock li {
+  margin-bottom: 6px;
+}
+
+
+.statusBar {
+  width: 100%;
+  height:auto;
+  padding: 2px 0 3px 0;
+  background-color:#4d4f5d;
+  color: white;
+  text-align: center;
+  display: none;
+}.statusBar .show {
+  display: initial;
+}
+.statusMessage {
+  display: inline-block;
+  width: calc(100% - 8px);
+  margin: 0 auto;
+  font-family: "Ubuntu Mono", monospace;
+  font-size: 18px;
+}
+
+
+.mainContainer {
+  width: 100%;
+  min-height: calc(100% - 345px);
+  height: auto;
+}
+
+
+.headContainer {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding-top: 30px;
+  padding-bottom: 70px;
+}
+.headContainer.small {
+  padding-top: 20px;
+  padding-bottom: 30px;
+}
+
+.titleContainer {
+  padding-top: 10px;
+  position: relative;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  background-color: transparent;
+  color: #fff4e6;
+  z-index: 0;
+}
+.titleContainer.small {
+  padding-top: 0;
+  height: 100px;
+}
+
+.submitLink {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: white;
+  font-size: 20px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  font-variant: small-caps;
+  z-index: 1000;
+}
+.submitLink:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0px;
+  height: 3px;
+  background-color: white;
+  transition: all 0.3s;
+  transform: translateX(67px);
+}.submitLink:hover:after {
+  height: 3px;
+  width: 135px;
+  transform: translateX(0px);
+}
+
+.title {
+  font-size: 70px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  position: relative;
+}
+.title.small {
+  font-size: 55px;
+}
+.title span {
+  position: relative;
+  display: inline-block;
+  top: -6px;
+  margin-left: 1px;
+  font-size: 40px;
+  padding: 0 5px 0 5px;
+  //transform: rotatey(0) translateY(0) scale(1);
+  transform: translateY(0px) scale(1);
+  color: #fff4e6;
+  transition: all .4s cubic-bezier(.36,.01,.1,1.1);
+}
+.title:hover span {
+  //transform: rotatey(360deg) translateY(-6px) scale(1.25);
+  transform: translateY(-12px) scale(1.25);
+  color: #fff;
+}
+
+.subtitle {
+  display: inline-block;
+  position: relative;
+  padding-top: 16px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+}
+.subtitle.small {
+  padding-top: 10px;
+  font-size: 15px;
+}
+.subtitle::before {
+  width: 40px;
+  height: 16px;
+  font-size: 19px;
+  font-family: "Ubuntu Mono";
+  font-weight: 700;
+  line-height: 16px;
+  background-color: #4d4f5d;
+  color: white;
+  content: " beta";
+  padding: 5px;
+  border-radius: 6px 6px 9px 3px;
+  position: absolute;
+  top: -81px;
+  right: -108px;
+}
+.subtitle.small::before {
+  width: 36px;
+  height: 13px;
+  font-size: 18px;
+  line-height: 13px;
+  border-radius: 4px 4px 7px 2px;
+  top: -66px;
+  right: -88px;
+}
+
+
+.searchBar {
+  position: relative;
+  max-width: 810px;
+  height: 60px;
+  background-color: #212335;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  border-radius: 30px;
+}
+.searchText {
+  width: 810px;
+  height: 56px;
+  border: none;
+  padding: 0;
+  padding-top: 4px;
+  background-color: rgba(0,0,0,0.1);
+  background-color: inherit;
+  border-radius: 30px;
+  text-indent: 30px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 30px;
+  vertical-align: middle;
+  color: #fff4e6;
+  transition: all 0.3s;
+}
+.searchButton {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 61px;
+  height: 60px;
+  background-color: #4d4f5d;
+  border-radius: 30px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+} .searchButton:hover {
+  background-color: #4d4f5d;
+}
+.searchButton svg {
+  display: inline-block;
+  margin-top: 14px;
+  margin-left: 7px;
+  height: 40px;
+  font-weight: 700;
+  color: white;
+  fill: currentColor;
+}
+
+
+.tileContainer {
+  width: auto;
+  height: auto;
+  position: relative;
+  text-align: left;
+  transition: .4s all;
+  opacity: 0;
+}
+.tileContainer.unhide {
+  opacity: 1;
+}
+.tile {
+  display: inline-block;
+  position: relative;
+  width: 260px;
+  height: 260px;
+  background-color: #4d4f5d;
+  border-radius: 3px 3px 2px 3px;
+  margin: 0 5px 12px 5px;
+  box-shadow: -4px 0px 0px 0px #4d4f5d;
+  transition: .4s all;
+  overflow: hidden;
+}.tile:hover {
+  background-color: #4d4f5d;
+  box-shadow: -5px 0px 0px 0px #4d4f5d;
+}
+.tileTitle {
+  width: 260px;
+  height: 32px;
+  position: relative;
+  text-align: center;
+  font-size: 30px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  color: white;
+  margin-top: 8px;
+  box-shadow: 255px 2px 0px 0px #212335;
+  border-radius: 0 0 4px 0;
+}
+.tileImage {
+  width: 260px;
+  height: 216px;
+  position: relative;
+  background-color: #212335;
+  background-size: 455px;
+  background-position: center 0px;
+  background-repeat: no-repeat;
+  border-radius: 3px 0 0px 4px;
+  transition: .3s all;
+  cursor: pointer;
+}
+.tileImage:hover, .tileImage.hover {
+  transform: translateX(10px);
+}
+.tileImage.clicked {
+  transform: translateX(240px);
+  box-shadow: -3px 1px 3px 0px rgba(0,0,0,0.3);
+}
+.tileImage.clicked:hover {
+  transform: translateX(230px);
+}
+.tileImage.hotDrink {
+  background-image: url("images/hotDrink_placeholder2.png");
+}
+.tileImage.coldDrink {
+  background-image: url("images/coldDrink_placeholder2.png");
+}
+.tileImage.blendedDrink {
+  background-image: url("images/blendedDrink_placeholder2.png");
+}
+
+.tileButtonContainer {
+  width: 245px;
+  height: 209px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  margin-top:2px;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+  //direction: rtl;
+  transform: rotateY(180deg);
+  -webkit-overflow-scrolling: initial;
+  overflow-scrolling: initial;
+  scrollbar-width: thin;
+}
+.tileButton {
+  display:inline-block;
+  position: relative;
+  min-width: 130px;
+  height: 32px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+  color: white;
+  font-size: 25px;
+  font-family: "PT Sans Narrow", sans-serif;
+  line-height: 32px;
+  transition: all .5s;
+  transform: translateX(0px);
+  //direction: ltr;
+}
+.tileButton:hover {
+  //background-color: #212335;
+  //box-shadow: 0px 2px 0 0 #fff;
+  color: #fff;
+  transform: translateX(5px);
+}
+.tileButton span {
+  display:inline-block;
+  transform: rotateY(180deg);
+}
+.tileButton.false {
+  height: 1px;
+  font-size: 1px;
+}
+
+.tileButtonContainer::-webkit-scrollbar {
+  width: 0.42em;
+  border-radius: 10px;
+  background-color: #4d4f5d;
+}
+
+.tileButtonContainer::-webkit-scrollbar-track {
+
+}
+
+.tileButtonContainer::-webkit-scrollbar-thumb {
+  background-color: #00A280;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+  box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+.tileButtonContainer::-webkit-scrollbar-thumb:hover {
+  background-color: #00B290;
+}
+
+.extraContainer {
+  width: auto;
+  height: auto;
+  position: relative;
+  text-align: left;
+  transition: .4s all;
+  opacity: 0;
+}
+.extraContainer.unhide {
+  opacity: 1;
+}
+.extra {
+  display: inline-block;
+  position: relative;
+  width: 262px;
+  height: 50px;
+  background-color: #4d4f5d;
+  border-radius: 4px;
+  margin: 0 5px 12px 3px;
+  transition: .4s all;
+  overflow: hidden;
+}.extra:hover {
+  background-color: #4d4f5d;
+}
+.extraTitle {
+  width: 262px;
+  height: 32px;
+  position: relative;
+  text-align: center;
+  font-size: 28px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 700;
+  color: white;
+  margin-top: 14px;
+}
+
+.categoryContainer {
+  position: relative;
+  max-width: 600px;
+  height: 65px;
+  margin: 0 auto;
+  margin-bottom: 45px;
+  background-color: #4d4f5d;
+  border-radius: 60px;
+  text-align: center;
+}
+
+.categoryTitle {
+  display: inline-block;
+  position: relative;
+  padding-top: 14px;
+  width: auto;
+  height: 40px;
+  font-family: "Josefin Sans";
+  font-size: 45px;
+  font-weight: 700;
+  color: white;
+}
+
+.categoryOptions {
+  position: absolute;
+  top: 0px;
+  right: 5px;
+  width: 60px;
+  height: 60px;
+}
+
+.categoryOptions .layoutButton {
+  width: 65px;
+  height: 65px;
+  background-image: url("toggleLayout_icon_act1-small.png");
+  background-size: 50px 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.22);
+  transition: all .3s;
+  border-radius: 40px;
+  overflow: hidden;
+}
+.categoryOptions .layoutButton:hover {
+  background-color: rgba(0,0,0,0.35);
+}
+.categoryOptions .layoutButton.act2 {
+  background-image: url("toggleLayout_icon_act2-small.png");
+}
+
+#searchErrorText {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 100%;
+  margin: 0;
+  left: 0;
+  font-size: 30px;
+  font-family: "Josefin Sans";
+  color: white;
+}
+
+.searchFoyer {
+  position: relative;
+  width: 154px;
+  height: 65px;
+  margin: 0 auto;
+  margin-bottom: 25px;
+  margin-top: -20px;
+  text-align: center;
+  color: white;
+  overflow: visible;
+}
+
+#resultsString {
+  display: inline-block;
+  position: relative;
+  width: auto;
+  padding-top: 22px;
+  padding-left: 10px;
+  height: 40px;
+  font-family: "Josefin Sans";
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.resultOptions {
+  position: relative;
+  display: inline-block;
+  width: auto;
+  height: 60px;
+  margin:0 5px 0 5px;
+  overflow: visible;
+}
+
+.resultOptions .layoutButton {
+  width: 65px;
+  height: 65px;
+  background-image: url("toggleLayout_icon_act1-small.png");
+  background-size: 50px 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  background-color: #4d4f5d;
+  transition: all .3s;
+  border-radius: 4px;
+  overflow: hidden;
+  display: inline-block;
+  margin: 0 5px 0 5px;
+}
+.resultOptions .layoutButton:hover,.resultOptions .helpButton:hover {
+  background-color: #4d4f5d;
+}
+.resultOptions .layoutButton.act2 {
+  background-image: url("toggleLayout_icon_act2-small.png");
+}
+
+.resultOptions .helpButton {
+  width: 65px;
+  height: 65px;
+  font-family: "Josefin Sans";
+  font-size: 50px;
+  line-height: 75px;
+  cursor: pointer;
+  background-color: #4d4f5d;
+  transition: all .3s;
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0 5px 0 5px;
+  display: inline-block;
+}
+
+
+.cardContainer {
+  width: auto;
+  height: auto;
+  transition: 0.3s all;
+  opacity: 0;
+}
+.cardContainer.unhide {
+  opacity: 1;
+}
+
+
+.cardHolder {
+  scrollbar-color: rgba(98,98,98,0.5) rgba(0,0,0,0.3);
+  scrollbar-width: thin;
+}
+
+.cardHolder::-webkit-scrollbar {
+  width: 0.3em;
+  border-radius: 100%;
+}
+
+.cardHolder::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.cardHolder::-webkit-scrollbar-thumb {
+  background-color: rgba(98,98,98,0.5);
+  border-radius: 10px;
+}
+.cardHolder::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(98,98,98,0.8);
+}
+
+.cardHolder {
+  position: relative;
+  width: 310px;
+  overflow: hidden;
+  overflow-y: auto;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 0 4px 12px 4px;
+  vertical-align: top;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: transparent;
+  highlight-color: rgba(0,0,0,0);
+  highlight-color: transparent;
+  box-shadow: 0 0 0 0 transparent;
+  transition: .3s all;
+}
+.cardHolder:hover, .cardHolder.hover {
+  box-shadow: 0px 0px 0px 3px white !important;
+}
+.cardHolder.touched, .cardHolder.clicked {
+  box-shadow: 0px 0px 0px 3px #fff !important;
+}
+.cardHolder.touched .card, .cardHolder.clicked .card {
+    transform: translateX(-310px);
+}
+
+.card {
+  width: 620px;
+  height: 500px;
+  transition: .4s;
+  background-color: #4d4f5d;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+.cardLeft {
+  width: 310px;
+  position: absolute;
+  transition: 0.3s all;
+}
+.cardRight {
+  width: 310px;
+  height: 100%;
+  position: absolute;
+  left: 310px;
+}
+
+.cardTitle {
+  position: relative;
+  display: inline-block;
+  width: 309px;
+  min-height: 50px;
+  color: white;
+  font-size: 30px;
+  font-family: "PT Sans Narrow", sans-serif;
+  background: #4d4f5d;
+  text-align: center;
+  transition: 0.3s all;
+  z-index: 0 !important;
+}
+.cardTitle span {
+  display: inline-block;
+  padding: 0 8px 0 8px;
+  padding-top: 3px;
+  padding-bottom: 4px;
+}
+.cardTitle span.source {
+  padding-top: 20px;
+}
+.cardTitle span.small {
+  padding-top: 15px;
+  font-size: 25px;
+}
+.cardTitle span.small.doubleLine {
+  padding-top: 9px;
+  line-height: 23px;
+}
+.cardTitle span.small.source {
+  padding-top: 25px;
+}
+.cardTitle span.small.doubleLine.source {
+  padding-top: 22px;
+  font-size: 20px;
+}
+.sourceLink {
+  position: relative;
+  display: block;
+  width: 310px;
+  min-height: 16px;
+  padding-top: 3px;
+  background-color: rgba(255,255,255,0);
+  transition: all 0.2s;
+  text-align: center;
+  font-size: 17px;
+  font-family: "Josefin Sans", sans-serif;
+  color: #044629;
+  background-color: white;
+  z-index: 1;
+  transition: 0.3s all;
+}
+.sourceLink.partner {
+  background-color: #EEEE00;
+}
+.sourceLink:hover {
+  background-color: white;
+}
+
+.cardImage {
+  width: 310px;
+  height: 210px;
+  box-shadow: 0 0 0 4px #212335;
+  //margin-top: 67px;
+  background-color: #212335;
+  background-size: contain;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  transition: 0.3s all;
+}
+
+.cardDescription {
+  display: block;
+  width: 295px;
+  padding: 7px;
+  background-color: #4d4f5d;
+  color: white;
+  font-size: 18px;
+  font-family: "PT Sans Narrow", sans-serif;
+  text-align: justify;
+  line-height: 22px;
+}
+
+.cardTile.cardHolder {
+  width: 260px;
+  overflow-y: hidden;
+}
+.cardTile .card {
+  height: 280px;
+}
+.cardTile .cardTitle {
+  width: 259px;
+}
+.cardTile .cardTitle span {
+  padding-left: 0;
+  padding-right: 0;
+}
+.cardTile .sourceLink {
+  width: 260px;
+}
+.cardTile .cardImage {
+  width: 260px;
+}
+
+.cardFocus.cardHolder {
+  position: fixed;
+  z-index: 99999;
+  left: calc(50% - (318px / 2));
+  top: calc(50% - (500px /2));
+  box-shadow: 0px 0px 0px 1px white;
+  margin-bottom: 0;
+}
+
+.cardOverlay {
+  position: absolute;
+  width: 260px;
+  height: 280px;
+  top: 0;
+  cursor: pointer;
+  //background-color: rgba(255,0,0,0.3);
+  z-index: 0;
+}
+.cardOverlay.hidden {
+  display: none;
+}
+
+
+.backCardTitle {
+  color: white;
+  font-size: 30px;
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
+  padding: 3px;
+  padding-top: 6px;
+  padding-bottom: 22px;
+  background-color: #4d4f5d;
+  height: 34px;
+}.DIS-backCardTitle:after {
+  position: relative;
+  display: block;
+  font-size: 17px;
+  content: "Custom Drink Recipe";
+  width: 310px;
+  margin: 0 auto;
+  margin-top: 2px;
+}.backCardTitle.small {
+  font-size: 18px;
+  padding-top: 7px;
+  padding-bottom: 13px;
+}
+.backCardTitle.doubleLine {
+  font-size: 16px;
+  padding-top: 8px;
+  padding-left: 1px;
+  padding-right: 1px;
+  padding-bottom: 12px;
+}
+
+.backCardButtonContainer {
+  width: 100%;
+  height: 30px;
+  position: absolute;
+  top: 28px;
+  text-align: center;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}.backCardButtonContainer:hover {
+}
+.backCardButtonContainer span {
+  display: inline-block;
+  height: 4px;
+  width: 4px;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-bottom: 3px;
+  background-color: white;
+  border-radius: 100%;
+}
+.cardButton {
+  display: inline-block;
+  position: relative;
+  padding-top: 6px;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+  transition: all .3s;
+}
+.cardButton:hover {
+  color: #fff;
+}
+.cardButton.selected {
+  color: #fff;
+  font-weight: 700;
+}
+
+
+@keyframes flash {
+  from {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  to {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+.flasher {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 500px;
+  background-color: rgba(255, 255, 255, 0);
+}
+ .animate {
+   animation: 300ms flash 1 ease-in-out;
+}
+
+
+.drinkCodeContainer {
+  width: 310px;
+  height: 235px;
+  background-color: rgba(0,0,0,0.28);
+  text-align: center;
+}
+.drinkCodeCol {
+  width: 155px;
+  float: left;
+}
+.drinkCodeBox {
+  display: inline-block;
+  width: 100px;
+  height: 39px;
+  line-height: 34px;
+  border: 2px solid #008866;
+  margin: 29px 10px 3px 10px;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: "PT Sans Narrow", sans-serif;
+  color: white;
+  padding: 0 3px 0 3px;
+}.drinkCodeBox.large {
+    width: 140px;
+}
+.drinkCodeBox.decaf {
+  margin-left: 25px
+}
+.drinkCodeBox:before {
+  position: relative;
+  display: block;
+  font-size: 20px;
+  height: 0;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 700;
+  margin-top: 0px;
+  line-height: normal;
+  top: -28px;
+}.drinkCodeBox.decaf:before {
+  content:"Decaf";
+}.drinkCodeBox.shots:before {
+  content:"Shots";
+}.drinkCodeBox.syrup:before {
+  content:"Syrup";
+}.drinkCodeBox.syrupCBS:before {
+  content:"Syrup (CBS)";
+}.drinkCodeBox.milk:before {
+  content:"Milk";
+}.drinkCodeBox.custom:before {
+  content:"Custom";
+}.drinkCodeBox.drink:before {
+  content:"Drink";
+}
+.drinkCode {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.drinkStickerContainer {
+  position: absolute;
+  width: 100%;
+  top: 53px;
+  height: calc(100% - 54px);
+  background: #212335;
+}
+.drinkStickerContainer .drink {
+  width: 100%;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  padding: 5px 0 10px 0;
+  column-span: all;
+}
+.drinkStickerContainer .modifiers {
+  width: calc(100% - 13px);
+  height: auto;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: 700;
+  font-size: 21px;
+  text-align: left;
+  color: white;
+  padding-left: 10px;
+}
+
+.fileButton {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-right: 8px;
+  text-align: center;
+  width: calc(100% - 40px);
+  font-size: 30px;
+  background: #4d4f5d;
+  border-radius: 30px;
+  font-family: "PT Sans Narrow", sans-serif;
+  color: white;
+}
+
+
+
+.obscure {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: black;
+  opacity: 0.8;
+  cursor: pointer;
+  z-index: 9999;
+  transition: all .6s, width 1ms, height 1ms;
+}
+.obscure.hidden {
+  z-index: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  transition: all .3s, width .35s cubic-bezier(1,.03,1,-0.16), height .35s cubic-bezier(1,.03,1,-0.16);
+}
+
+.resetDisplayButton {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  color: white;
+  font-family: sans-serif;
+  font-size: 32px;
+  text-align: center;
+  line-height: 24px;
+  z-index: 999999;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.3);
+  border-radius: 100%;
+  border: 2px solid white;
+}
+.resetDisplayButton.hidden {
+  display: none;
+}
+
+.helpHighlight {
+  z-index: 99999;
+}
+.helpObscure {
+  opacity: 0.2;
+}
+
+.tooltip {
+
+}
+.tooltip::before, .tooltip::after {
+  position: absolute;
+  display:none;
+}
+.tooltip.helpHighlight::before, .tooltip.helpHighlight::after {
+  display: initial;
+}
+.tooltip::before {
+  content: "";
+  border-style: solid;
+}
+.tooltip::after {
+  background: #4d4f5d;
+  font-size: 19px;
+  font-family: "PT Sans Narrow", sans-serif;
+  font-weight: initial;
+  text-align: center;
+  line-height: 22px;
+  padding: 3px 7px 3px 7px;
+  border: 2px solid #fff;
+  width: 100px;
+  color: white;
+  content: attr(data-tooltip);
+  border-radius: 5px;
+}
+.tooltip.t-left::before {
+  border-width: 8px 0 8px 8px;
+  border-color: transparent transparent transparent #fff;
+  right: calc(100% + 9px);
+  top: 5px;
+}
+.tooltip.t-left::after {
+  right: calc(100% + 17px);
+}
+.tooltip.t-right::before {
+  border-width: 8px 8px 8px 0;
+  border-color: transparent #fff transparent transparent;
+  left: calc(100% + 9px);
+  top: 5px;
+}
+.tooltip.t-right::after {
+  left: calc(100% + 17px);
+}
+.tooltip.t-top-left::before {
+  border-width: 8px 8px 0 8px;
+  border-color: #fff transparent transparent transparent;
+  bottom: calc(100% + 9px);
+  left: 5px;
+}
+.tooltip.t-top-left::after {
+  bottom: calc(100% + 17px);
+  left: 0;
+}
+.tooltip.t-bottom-right::before {
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent #fff transparent;
+  top: calc(100% + 9px);
+  right: 5px;
+}
+.tooltip.t-bottom-right::after {
+  top: calc(100% + 17px);
+  right: 0;
+}
+.tooltip.t-bottom-center::before {
+  border-width: 0 8px 8px 8px;
+  border-color: transparent transparent #fff transparent;
+  top: calc(100%);
+  left: calc(50% - 8px);
+}
+.tooltip.t-bottom-center::after {
+  top: calc(100% + 8px);
+  left: calc(50% - 59px);
+}
+.tooltip.t-center::before {
+  border-width: 0;
+  border-color: transparent;
+}
+.tooltip.t-center::after {
+  top: calc(22% + 68px);
+  left: calc(50% - 59px);
+}
+
+.tooltip.helpTileTip::after {
+  content: "Click to Expand";
+}
+
+/*
+.helpWrapper {
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 99999;
+  text-align: center;
+  transition: opacity .4s;
+  opacity: 1;
+}
+.helpWrapper.hidden {
+  z-index: -9999;
+  opacity: 0;
+  transition: opacity .4s;
+}
+.helpContainer {
+  display: inline-block;
+  width: calc(100% - 100px);
+  height: calc(100% - 150px);
+  margin-top: 84px;
+  background-color: #005230;
+  border-radius: 30px;
+  z-index: 999999;
+  position: relative;
+}
+.helpTitle {
+  width: 100%;
+  margin-top: 20px;
+  text-align: center;
+  font-family: "Josefin Sans";
+  font-size: 33px;
+  color: white;
+}
+.helpText {
+
+}
+*/
+
+.formContainer{
+  width: 100%;
+  text-align: center;
+}
+.formField, .formText, .formSubmit, .custom-select {
+  position: relative;
+  display: inline-block;
+  border-radius: 6px;
+  height: 42px;
+  width: calc(100% - 50px);
+  max-width: 600px;
+  min-width: 200px;
+  margin-top: 10px;
+  background-color: #212335;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 17px;
+  color: #fff4e6;
+  transition: all .5s;
+  padding-left: 10px;
+  padding-right: 8px;
+  padding-top: 4px;
+}
+.formField {
+  text-align: center;
+}
+.formText {
+  height: 98px;
+  padding-top: 6px;
+  font-size: 17px;
+  text-align: left;
+}
+.formSubmit {
+  margin-top: 15px;
+  width: 150px;
+  height: 46px;
+  cursor: pointer;
+  background-color: #4d4f5d;
+  font-size: 24px
+}.formSubmit:hover {
+  background-color: #4d4f5d;
+}
+
+
+.custom-select {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  margin-top: 7px;
+}
+.custom-select select {
+  display: none;
+}
+.select-selected {
+  background-color: #212335;
+}
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 20px;
+  right: 11px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  padding-top: 11px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.0) transparent;
+  cursor: pointer;
+}
+.select-items {
+  position: absolute;
+  background-color: #212335;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  border: 3px solid white;
+  border-radius: 7px;
+}
+.select-items div:hover {
+  color:#fff;
+}
+.select-hide {
+  display: none;
+}
+select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff !important;
+}
+
+
+/* Customize the label (the container) */
+.checkCon {
+  display: inline-block;
+  position: relative;
+  width: calc(100% - 35px);
+  max-width: 382px;
+  padding-left: 35px;
+  padding-top: 5px;
+  margin-top: 22px;
+  cursor: pointer;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  color: white;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  text-align: left;
+}
+
+/* Hide the browser's default checkbox */
+.checkCon input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 2px;
+}
+
+/* On mouse-over, add a grey background color */
+.checkCon:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkCon input:checked ~ .checkmark {
+  background-color: #048649;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkCon input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkCon .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.formSubtext {
+  margin-top: 14px;
+  margin-bottom: 12px;
+  color: #bbb4a6;
+  font-size: 14px;
+  font-family: "Ubuntu Mono", monospace;
+}
+.formSubtext a {
+  color: #ddd4c6;
+  text-decoration: underline;
+}
+.formSubtext a:hover {
+  color: #fff4e6;
+  text-decoration: underline;
+}
+
+.mainContainer.webapp {
+  background-color: #4d4f5d;
+}
+.webappTitle {
+  width: 100%;
+  padding-top: 20px;
+  font-size: 32px;
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
+  color: #fff4e6;
+}
+.webappInfo {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  text-align: center;
+  color: #fff4e6;
+}
+.webappSelectionContainer {
+  width: 100%;
+  text-align: center;
+  margin-top: 25px;
+}
+.webappSelectionTile {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 12px;
+  //background-color: #4d4f5d;
+  border-radius: 4px;
+  //border: solid #fff 3px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom;
+  line-height: 235px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 17px;
+  color: #fff4e6;
+  transition: all .2s;
+  cursor: pointer;
+}
+.webappSelectionTile:hover {
+  filter: contrast(125%);
+}
+.webappSelectionTile.ios {
+  background-image: url(/images/apple_icon.png);
+  margin-right: 28px;
+}
+.webappSelectionTile.android {
+  margin-left: 28px;
+  background-image: url(/images/Android_Robot.svg);
+}
+
+.webappInstructionsWrapper {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  margin-top: 40px;
+  //background-color: #1a1c2e;
+  padding: 20px;
+  padding-left: 0px;
+}
+.webappInstructionsContainer {
+  position: relative;
+  display: inline-block;
+  max-width: 800px;
+  width: 100%;
+}
+.webappInstructionsTitle {
+  color: #fff4e6;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+.webappInstructionsImage, .webappInstructionsImage img {
+  position: relative;
+  max-width: 545px;
+  max-height: 969px;
+  width: 100%;
+  height: auto;
+  display: inline-block;
+}
+.webappInstructionsOverlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  min-height: 122px;
+  padding-bottom: 20px;
+  transition: all 0.3s;
+  background: rgba(0,0,0,0.7);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.65) 85%, rgba(0,0,0,0) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.65) 85%,rgba(0,0,0,0) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.65) 85%,rgba(0,0,0,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}.webappInstructionsOverlay:hover {
+  background: rgba(0,0,0,0.95);
+  background: -moz-linear-gradient(top, rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.95) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.95) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%,rgba(0,0,0,0.95) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+.webappInstructionsHeader {
+  color: #fff4e6;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 25px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+.webappInstructionsText {
+  color: #fff4e6;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  line-height: 24px;
+}
+
+
+.footer {
+  width: 100%;
+  min-height: 78px;
+  position: relative;
+  bottom: 0;
+  flex-shrink: 0;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  background-color: #00573d;
+  box-shadow: 0 35px 0 0 #00573d, 0 -5px 0 0 #00573d
+}
+.footer .footerLinks {
+  display: block;
+  padding: 8px;
+  margin-top: 8px;
+  font-family: "Josefin Sans";
+  font-size: 15px;
+}
+.footer .disclaimer {
+  display: block;
+  margin-bottom: 4px;
+  padding: 4px;
+  line-height: 20px;
+  font-family: "Josefin Sans";
+  font-size: 15px;
+}
+
+
+
+
+
+@media only screen and (max-width: 816px) {
+
+  .submitLink {
+    //display: none;
+    font-size: 18px;
+  }
+
+  .headContainer {
+    padding-top: 10px;
+    padding-bottom: 62px;
+  }
+  .headContainer.small {
+    padding-top: 10px;
+    padding-bottom: 62px;
+  }
+
+  .titleContainer {
+    padding-top: 0;
+  }
+
+  .title {
+    font-size: 38px;
+    line-height: 106px;
+  }
+  .title.small {
+    font-size: 36px;
+  }
+
+  .title span {
+    position: relative;
+    display: block;
+    top: 0;
+    font-size: 125px;
+    padding: 0 5px 0 5px;
+    transform: translateY(20px) scale(1);
+    color: #212335;
+    transition: all .4s;
+    margin:-80px;
+    margin-top: -90px;
+    z-index: -1000;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+    highlight-color: rgba(0,0,0,0);
+    highlight-color: transparent;
+  }
+  .title:hover span, .title.hover span {
+    transform: translateY(6px) scale(1);
+    color: #4d4f5d;
+  }
+
+  .subtitle {
+    display: inline-block;
+    margin-top: 0;
+    top: -30px;
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 14px;
+    padding: 4px 4px 0 4px;
+  }
+  .subtitle.small {
+    font-size: 12px;
+  }
+  .subtitle::before {
+    width: 41px;
+    height: 16px;
+    font-size: 19px;
+    font-family: "Ubuntu Mono";
+    font-weight: 700;
+    line-height: 16px;
+    background-color: #4d4f5d;
+    color: white;
+    padding: 4px;
+    border-radius: 3px;
+    position: absolute;
+    top: -122px;
+    right: 132px;
+  }
+  .subtitle.small::before {
+    width: 36px;
+    height: 13px;
+    font-size: 18px;
+    line-height: 13px;
+    border-radius: 2px;
+    top: -120px;
+    right: 132px;
+  }
+
+  .searchBar {
+    width: calc(100% - 10px);
+    height: 50px;
+  }
+  .searchText {
+    width: 100%;
+    height: 45px;
+    font-size: 18px;
+    text-indent: 12px;
+  }
+  .searchButton {
+    width: 51px;
+    height: 50px;
+  }
+  .searchButton svg {
+    margin-top: 11px;
+    margin-left: 6px;
+    height: 35px;
+  }
+
+  .helpButton {
+    display: none;
+  }
+
+
+  .tile {
+    width: 145px;
+    height: 150px;
+    border-radius: 2px 2px 2px 3px;
+    margin: 0 4px 10px 3px;
+    box-shadow: -3px 0px 0px 0px #4d4f5d;
+  }.tile:hover {
+    box-shadow: -3px 0px 0px 0px #006240;
+  }
+  .tileTitle {
+    width: 145px;
+    height: 24px;
+    margin-top: 9px;
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 135px 12px 0px 0px #212335;
+  }
+  .tileImage {
+    width: 145px;
+    height: 114px;
+    background-size: 225px;
+    background-position: center 5px;
+    border-radius: 3px 0 0 3px;
+  }
+
+  .tileImage:hover, .tileImage.hover {
+    transform: translateX(10px);
+  }
+  .tileImage.clicked {
+    transform: translateX(129px);
+    box-shadow: -3px 1px 3px 0px rgba(0,0,0,0.3);
+  }
+  .tileImage.clicked:hover {
+    transform: translateX(120px);
+  }
+
+  .tileButtonContainer {
+    width: 148px;
+    height: 110px;
+    margin-top: 3px;
+    margin-left: 1px;
+    top: 33px;
+    text-align: right;
+  }
+  .tileButton {
+    min-width: 145px;
+    height: 38px;
+    margin-top: -8px;
+    margin-bottom: 0px;
+    text-indent: 10px;
+    font-size: 20px;
+  }.tileButton:hover {
+    transform: translate(0);
+  }
+
+  .extra {
+    width: 147px;
+    height: 40px;
+    border-radius: 2px;
+    margin: 0 4px 10px 1px;
+  }
+  .extraTitle {
+    width: 145px;
+    height: 40px;
+    margin-top: 13px;
+    font-size: 19px;
+    font-weight: 400;
+  }
+
+
+  .categoryContainer {
+    max-width: 460px;
+  }
+
+  .categoryTitle {
+    display: inline-block;
+    position: relative;
+    padding-left: 0px;
+    padding-top: 22px;
+    height: 55px;
+    font-size: 26px;
+  }
+
+  .categoryOptions {
+    position: absolute;
+  }
+
+
+  .cardLeft {
+    width: 146px;
+  }
+
+  .cardTile.cardHolder {
+    width: 145px;
+  }
+
+  .cardTile .card {
+    height: 160px;
+  }
+
+  .cardTile .cardTitle {
+    width: 145px;
+    font-size: 16px;
+    min-height: 28px;
+  }
+  .cardTile .cardTitle span {
+    display: inline-block;
+  }
+  .cardTile .cardTitle span.source {
+    padding-top: 24px;
+  }
+  .cardTile .cardTitle span.small {
+    padding-top: 13px;
+    font-size: 15px;
+  }
+  .cardTile .cardTitle span.small.doubleLine {
+    padding-top: 8px;
+    line-height: 15px;
+  }
+  .cardTile .cardTitle span.small.source {
+    padding-top: 21px;
+  }
+  .cardTile .cardTitle span.small.doubleLine.source {
+    padding-top: 18px;
+    font-size: 11px;
+  }
+
+  .cardTile .sourceLink {
+    width: 145px;
+    min-height: 12px;
+    font-size: 12px;
+  }
+
+  .cardTile .cardImage {
+    width: 145px;
+    height: 145px;
+    background-position: center 2px;
+  }
+
+
+  .footer .footerLinks {
+    display: block;
+    padding: 8px;
+    margin-top: 8px;
+    font-family: "Josefin Sans";
+    font-size: 11px;
+  }
+  .footer .disclaimer {
+    display: block;
+    margin-bottom: 2px;
+    padding: 4px;
+    line-height: 18px;
+    font-family: "Josefin Sans";
+    font-size: 12px;
+  }
+
+
+}
+
+@media only screen and (max-height: 510px) {
+  .cardFocus.cardHolder {
+    position: fixed;
+    z-index: 99999;
+    left: calc(50% - (318px / 2));
+    top: calc(50% - ((250px + (100% - 6px - 250px)) /2));
+    height: calc(250px + (100% - 6px - 250px));
+    max-height: 500px;
+    box-shadow: 0px 0px 0px 1px white;
+    margin-bottom: 0;
+  }
+  .cardFocus .card {
+    height: 100%;
+  }
+  .cardFocus .cardLeft {
+    height: 100%;
+  }
+  .cardFocus .cardImage {
+    height: calc(100% - 250px);
+    max-height: 250px;
+    background-position-x: center;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+
+  .categoryContainer {
+    //text-align: left;
+  }
+
+  .categoryTitle {
+    margin-right: 60px;
+  }
+
+}

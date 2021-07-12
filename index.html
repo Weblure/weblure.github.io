@@ -1,4 +1,720 @@
 <!DOCTYPE HTML>
-<html>
- <a href="/Novel-Library">Novel AI Library</a>
-</html>
+<HTML>
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" >
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="apple-touch-icon-57x57.png" />
+    <title>Novel Library | Search</title>
+
+    <style type="text/css"></style>
+
+    <script src="IDB.js"></script>
+
+  </head>
+
+  <body onload="document.querySelector('.cardContainer').classList.add('unhide'); onresize(); readDBdelay(250); initPage('');">
+
+    <div class="obscure hidden" id="obscure" onclick="resetDisplay()"></div>
+    <div class="resetDisplayButton hidden" id="resetDisplay" onclick="resetDisplay()">x</div>
+
+    <div class="statusBar" id="statusBar">
+
+      <span class="statusMessage" id="statusMessage">Maintenance in Progress</span>
+
+    </div>
+
+    <div class="headContainer small" id="headContainer">
+
+      <a href="https://discord.gg/VKNZcRgjTt" target="_blank">
+        <div class="submitLink small tooltip t-bottom-right" id="submitLink">
+          <span>Submit a Novel</span>
+        </div>
+      </a>
+
+      <div class="titleContainer small">
+        <span class="title small tooltip t-bottom-right" data-tooltip="Click to Reload Page" id="title"><a href="/Novel-Library">Novel<span>&#x1f56e;</span>Libary</a></span>
+        </br>
+        <span class="subtitle small" id="subtitle" style="width:300px;">Smells like old books.</span>
+      </div>
+
+    </div>
+
+
+    <script type="text/javascript">
+
+      var searchParams = "";
+      var searchMessage = "";
+      var novelObjects = {};
+      var displayedObjects = {};
+      var timeout;
+      var firstNovelID = "";
+
+      String.prototype.capitalize = function() {
+        return this.charAt(0).toUpperCase() + this.slice(1);
+      }
+
+      function initPage(searchTerms) {
+        novelObjects = {};
+        displayedObjects = {};
+        firstNovelID = "";
+
+        document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 100);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 500); //TODO: FIX: Race conditions; this is a terrible ducktape solution
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 1000);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 3000);
+        setTimeout(function() { document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText; }, 5000);
+
+        if (searchTerms == "") {
+          document.getElementById("searchField").placeholder = 'Showing random novels';
+        }
+        else {
+          searchTerms = searchTerms.replace(/_/g, ' ');
+          document.getElementById("searchField").placeholder = 'Results for "' + searchTerms + '"';
+        }
+
+      }
+
+
+      var appendCount = 0;
+      var timeout;
+      //TODO: Find a better alternative; you're literally fixing a race condition with a slightly better race condition
+      function appendNovel(object, count) {
+        if (!object) {
+          if (!count) {
+           console.log("appendNovel ERROR: no count param");
+         }
+          else if (count == appendCount) {
+            console.log("Counts matched; committing to HTML");
+            searchMessage = "";
+            document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+            loopNovelArray(); //TODO: Replace with sort-by-duplicate relevancy function, then nest this inside
+          }
+          else {
+            console.log("Count mismatched; aborting."); //When will this ever happen?
+          }
+        }
+        else {
+          searchMessage = "Displaying...";
+          ++appendCount; //Is there a point to this?
+          var novelID = "novel" + object.id;
+          if (!novelObjects[novelID]) {
+            ///console.log(novelObjects[novelID]);
+            novelObjects[novelID] = object;
+            ///console.log("Added new novel to novelObjects");
+            ///console.log(object);
+          }
+          else {
+            console.log("Skipping duplicate novel: " + object.id);
+            //TODO: Track the amount of duplicates per card. Reorder cards depending on the amount of duplicates; cards with the most duplicates should be displayed at the top.
+            //^^^^^ This should function as an alternative to exclusive searching, by instead ordering the inclusive search's results by relevance (or by most matched search terms).
+          }
+          clearTimeout(timeout);
+          timeout = setTimeout(appendNovel, 500, null, appendCount); //TODO: FIX: Race condition
+        }
+      }
+
+       function readDBdelay(time) { //TODO: Ducktape fix for race condition via a slower race condition. Figure out how to use a promise.
+         setTimeout(function(){ readDB(); }, time);
+       }
+
+      function readDB(loaded) {
+
+        //var db = openRequest.result; //TODO: FIX: Race condition
+
+        // Start a transaction on the 'novels' table
+        var trans = initGlobalDB.transaction(["novels"], "readonly");
+
+        // Instantiate the index variable for searching multiple indexes.
+        var index;
+        var indexArray = "";
+
+
+        if (indexArray.length > 0) {
+          indexArray = indexArray.split(",");
+        }
+        else {
+          indexArray = ["name", "author", "type", "subtype", "tags"];
+        }
+
+        if (searchParams == "") {
+          indexArray = ["name"];
+        }
+
+
+        ///console.log(searchParams);
+        searchParams = searchParams.split(" ");
+
+        ///console.log("►" + searchParams);
+
+        loopSearchAlgorithm(searchParams);
+
+        function loopSearchAlgorithm(params) {
+
+          searchMessage = "Searching...";
+          document.getElementById('searchErrorText').innerHTML = searchMessage+"<br>"+dbErrorText;
+          clearTimeout(timeout);
+
+          for (i = 0; i < indexArray.length; i++) {
+
+            ///console.log("<index> " + indexArray[i]);
+            index = trans.objectStore("novels").index(indexArray[i]);
+
+            for (int = 0; int < params.length; int++) {
+
+              ///console.log("<params> " + params[int]);
+              findIgnoreCaseAlgorithm(index, params[int], appendNovel, nullFunction);
+
+            }
+          }
+
+        }
+
+        function nullFunction() {
+          //TODO: Find a better way to void a function
+        }
+
+        function findIgnoreCaseAlgorithm(index, needle, onfound, onfinish) {
+          clearTimeout(timeout);
+
+          // index: An instance of IDBIndex
+          // needle: The string to search for
+          // onfound: A function to call for each found item
+          // onfinish: A function to call when we're finshed searching.
+
+          var upperNeedle = needle.toUpperCase();
+          var lowerNeedle = needle.toLowerCase();
+          var cursorReq = index.openCursor();
+
+          cursorReq.onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (!cursor) {
+                // No more data to iterate over - call onfinish()
+                onfinish();
+                return;
+            }
+
+            var key = cursor.key;
+            if (typeof key !== 'string' && key.constructor !== Array) {
+                // Just in case we stumble on data that isnt what we expect -
+                // toLowerCase() wont work on this object. Check next.
+                cursor.continue();
+                return;
+            }
+
+            var lowerKey;
+            if (key.constructor === Array) {
+              ///console.log(key);
+              ///console.log(lowerNeedle);
+
+              if (key.indexOf(lowerNeedle) !== -1) {
+                  ///console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
+                  onfound(cursor.value); // Notify caller we found something
+                  cursor.continue(); // Check next record, it might match too!
+              }
+              else {
+                 // Compare next records until success or failure.
+                 //TODO: Find a graceful solution
+                 cursor.continue();
+              }
+            }
+            else {
+             lowerKey = key.toLowerCase();
+             ///console.log(">" + key);
+             ///console.log(">>" + lowerNeedle);
+
+              if (lowerKey.indexOf(lowerNeedle) !== -1) {
+                  ///console.log("Found a match ("+ lowerKey +" | "+ lowerNeedle +") while searching " + index);
+                  onfound(cursor.value); // Notify caller we found something
+                  cursor.continue(); // Check next record, it might match too!
+              } else {/*
+                  // Derive least possible casing to appear after key in sort order
+                  var nextNeedle = nextCasing(key, lowerKey, upperNeedle, lowerNeedle); //WHAT IS THE POINT OF CALLING THIS?
+                  //IT'S ALREADY COMPARING THE LOWERCASED KEY TO THE LOWERCASED NEEDLE, WHY IS THIS FUNCTION EVEN NEEDED?
+                  if (nextNeedle) {
+                      ///console.log(">>>" + nextNeedle);
+                      cursor.continue(nextNeedle);
+                  } else {
+                      // No more possible case combinations to look for.
+                      // Call onfinish() and dont call cursor.continue() anymore.
+                      //onfinish();
+                      */
+                      cursor.continue();
+              }
+            }
+          }
+        };
+
+          function nextCasing(key, lowerKey) { //TODO: Remove this pointless mess
+              var length = Math.min(key.length, lowerNeedle.length); // lowerNeedle is from outer scope
+              var llp = -1; // "llp = least lowerable position"
+
+              // Iterate through the most common first chars for cursor.key and needle.
+              for (var i = 0; i < length; ++i) {
+                  var lwrKeyChar = lowerKey[i];
+                  clearTimeout(timeout);
+
+                  if (lwrKeyChar !== lowerNeedle[i]) {
+                      // The char at position i differs between the found key and needle being
+                      // looked for when just doing case insensitive match.
+                      // Now check how they differ and how to trace next casing from this:
+                      if (key[i] < upperNeedle[i]) {
+                          // We could just append the UPPER version of the key we're looking for
+                          // since found key is less than that.
+                          return key.substr(0, i) + upperNeedle[i] + upperNeedle.substr(i + 1);
+                      }
+
+                      if (key[i] < lowerNeedle[i]) {
+                          // Found key is between lower and upper version. Lets first append a
+                          // lowercase char and the rest as uppercase.
+                          return key.substr(0, i) + lowerNeedle[i] + upperNeedle.substr(i + 1);
+                      }
+
+                      if (llp >= 0) {
+                          // Found key is beyond this key. Need to rewind to last lowerable
+                          // position and return key + 1 lowercase char + uppercase rest.
+                          return key.substr(0, llp) + lowerKey[llp] + upperNeedle.substr(llp + 1)
+                      }
+
+                      // There are no lowerable positions - all chars are already lowercase
+                      // (or non-lowerable chars such as space, periods etc)
+
+                      return null;
+                  }
+
+                  if (key[i] < lwrKeyChar) {
+                      // Making lowercase of this char would make it appear after key.
+                      // Therefore set llp = i.
+                      llp = i;
+              }
+
+              // All first common chars of found key and the key we're looking for are equal
+              // when ignoring case.
+              if (length < lowerNeedle.length) {
+                  // key was shorter than needle, meaning that we may look for key + UPPERCASE
+                  // version of the rest of needle.
+                  return key + upperNeedle.substr(key.length);
+              }
+
+              // Found key was longer than the key we're looking for
+              if (llp < 0) {
+                  // ...and there is no way to make key we're looking for appear after found key.
+                  return null;
+              } else {
+                  // There is a position of a char, that if we make that char lowercase,
+                  // needle will become greater than found key.
+                  return key.substr(0, llp) + lowerNeedle[llp] + upperNeedle.substr(llp + 1);
+              }
+            }
+          }
+        };
+
+      function loopNovelArray() {
+
+        console.log("Running loopNovelArray");
+        var i = 1;
+        if (searchParams == "") {
+          i = Math.floor(Math.random() * Object.keys(novelObjects).length);
+        }
+        var count = 0;
+        ///console.log(Object.keys(novelObjects).length);
+        if (!novelObjects || Object.keys(novelObjects).length == 0) {
+          searchMessage = "No results found.";
+        }
+        while (Object.keys(novelObjects).length > count && count < 50) {
+          searchMessage = "";
+          if (novelObjects[("novel" + i)]) {
+            if(!displayedObjects[("n"+i)]) {
+              displayedObjects[("n"+i)] = "n"+i;
+              console.log("Looping recipe object: " + i);
+              insertNovelCard(novelObjects[("novel" + i)]);
+            }
+            else {
+              console.log("Duplicate skipped in loopNovelArray: "+displayedObjects[("n"+i)]);
+              console.log(novelObjects[("novel" + i)]);
+            }
+            count++;
+          }
+
+          i++;
+        }
+
+        //var db = openRequest.result;
+        //db.close(); //Done searching the database; close it to prevent jamming.
+        /////console.log("IDB request closed: search concluded.")
+      }
+
+
+      function insertNovelCard(novelObject) {
+
+        ///console.log(openRequest);
+
+        var novelID = "novel" + novelObject.id;
+        var novelName = novelObject.name;
+        var novelSrcHTML = "";
+        var imageURL = "placeholder.webp";
+        var novelDescription = novelObject.description;
+        var titleClasses = "";
+        var dataArray = [];
+        var help_tooltip = help_center = help_bottomleft = help_data1 = help_tile = "";
+
+        if (firstNovelID == "") {
+          firstNovelID = novelID;
+        }
+
+        if (firstNovelID == novelID) {
+          help_tooltip = "tooltip";
+          help_tile = "helpTileTip";
+          help_center = "t-center";
+          help_bottomcenter = "t-bottom-center";
+          help_data1 = 'data-tooltip="Click to Show Files"';
+          help_data2 = 'data-tooltip="Click the files you want to download."';
+        }
+
+        if (novelObject.source.type != "none") {
+          novelSrcHTML = "<a href='" + novelObject.source.url + "' class='sourceLink " + novelObject.source.type + "' onClick='event.stopPropagation();'>" + novelObject.source.name + "</a>"
+          //titleClasses = titleClasses + "source ";
+        }
+        if (novelObject.nameLength == "long") {
+          titleClasses = titleClasses + "small ";
+        }
+        if (novelObject.nameLength == "double") {
+          titleClasses = titleClasses + "small doubleLine ";
+        }
+        if (novelObject.imageUrl) {
+          imageURL = novelObject.imageUrl;
+        }
+
+
+        var novelArray = ['scenario', 'story', 'lorebook', 'generationset'];
+        for (i = 0; i < novelArray.length; i++) {
+          if (novelObject.data.files[novelArray[i]] === undefined) {
+            console.log(novelArray[i] + " type not found.");
+          }
+          else {
+            if (novelArray[i]) {
+              if (novelObject.data.files[novelArray[i]] === "") {
+                dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='files/"+novelObject.id+"-"+novelObject.name+"."+novelArray[i]+"'>Download "+novelArray[i].capitalize()+"</a>");
+              }
+              else {
+                dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a>");
+              }
+            }
+          }
+        }
+
+        var dataHTML = dataArray.join('');
+
+
+
+
+        var cardHTML = `
+          <div class="cardHolder cardTile" id="${novelID}_holder" onTouchTap="this.classList.toggle('touched');" onClick="this.classList.toggle('clicked');">
+            <div class="card" id="${novelID}">
+
+              <div class="cardLeft">
+                ${novelSrcHTML}
+                <div class="cardTitle ${help_tooltip} ${help_tile} ${help_center}" ${help_data1} id="${novelID}_left">
+                  <span class="${titleClasses}">${novelName}</span>
+                </div>
+                <div class="cardImage" style="background-image: url('${imageURL}');"></div>
+                <div class="cardDescription">
+                  ${novelDescription}
+                </div>
+              </div>
+              <div class="cardRight">
+                <div class="backCardTitle small">${novelName}</div>
+                <div class="drinkStickerContainer ${help_tooltip} ${help_center}" ${help_data2} id="${novelID}_right2">
+                  ${dataHTML}
+                </div>
+              </div>
+            </div>
+            <div class="cardOverlay" onClick="event.stopPropagation(); this.classList.add('hidden'); focusCard('${novelID}');"></div>
+          </div>
+        `
+
+
+        document.getElementById("cardContainer").insertAdjacentHTML('beforeend', cardHTML);
+
+        onresize();
+      }
+
+
+
+
+      //Change recipe to match size modification
+      function adjustRecipe(novelID, size) {
+
+        ///console.log(novelID + " | " + size);
+
+        document.getElementById(novelID).querySelector('.flasher').classList.add('animate');
+        setTimeout(function(){document.getElementById(novelID).querySelector('.flasher').classList.remove('animate');}, 310);
+
+        document.getElementById(novelID).querySelector('[name="title"]').innerHTML = /*size.toUpperCase() + " " + */novelObjects[novelID].sticker.title;
+        document.getElementById(novelID).querySelector('[name="mods"]').innerHTML = novelObjects[novelID].sticker.mods[size];
+
+        document.getElementById(novelID).querySelector('.cardButton.selected').classList.remove('selected');
+
+      }
+
+      //Return focused card to stack.
+      function resetDisplay () {
+
+        document.getElementById("obscure").classList.add('hidden');
+        document.getElementById("resetDisplay").classList.add('hidden');
+
+        if (document.querySelector('.helpHighlight')){
+
+          document.getElementById("searchBar").classList.remove('helpHighlight');
+          document.getElementById("searchFoyer").classList.remove('helpHighlight');
+          document.getElementById("layoutButton").classList.remove('helpHighlight');
+          document.getElementById("helpButton").classList.remove('helpHighlight');
+          document.getElementById("headContainer").classList.remove('helpHighlight');
+          document.getElementById("title").classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.remove('helpHighlight');
+          //document.getElementById([firstNovelID+"_right"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.remove('helpHighlight');
+          //document.getElementById("submitLink").classList.remove('helpObscure');
+          document.getElementById("subtitle").classList.remove('helpObscure');
+
+        }
+
+        if (document.querySelector('.cardFocus')){
+          document.getElementById(firstNovelID + "_left").classList.add('helpTileTip');
+          document.querySelector('.cardFocus').classList.add('cardTile');
+          document.querySelector('.cardFocus').classList.remove('cardFocus');
+          document.querySelector('.cardOverlay.hidden').classList.remove('hidden');
+        }
+
+        if (document.querySelector('.clicked')) {
+          document.querySelectorAll('.clicked').forEach(function(elem) {
+              elem.classList.remove('clicked');
+          });
+        }
+        if (document.querySelector('.touched')) {
+          document.querySelectorAll('.touched').forEach(function(elem) {
+              elem.classList.remove('touched');
+          });
+        }
+
+      }
+
+      function focusCard(novelID) {
+
+        document.getElementById("obscure").classList.remove('hidden');
+        document.getElementById("resetDisplay").classList.remove('hidden');
+        document.getElementById(novelID + "_holder").classList.remove('cardTile');
+        document.getElementById(novelID + "_left").classList.remove('helpTileTip');
+        document.getElementById(novelID + "_holder").classList.add('cardFocus');
+
+      }
+
+      function toggleHelp() {
+
+        if(document.querySelector('.helpHighlight')){
+          document.getElementById("obscure").classList.add('hidden');
+          document.getElementById("resetDisplay").classList.add('hidden');
+          document.getElementById("searchBar").classList.remove('helpHighlight');
+          document.getElementById("searchFoyer").classList.remove('helpHighlight');
+          document.getElementById("layoutButton").classList.remove('helpHighlight');
+          document.getElementById("helpButton").classList.remove('helpHighlight');
+          document.getElementById("headContainer").classList.remove('helpHighlight');
+          document.getElementById("title").classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.remove('helpHighlight');
+          //document.getElementById([firstNovelID+"_right"]).classList.remove('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.remove('helpHighlight');
+          //document.getElementById("submitLink").classList.remove('helpObscure');
+          document.getElementById("subtitle").classList.remove('helpObscure');
+        }
+
+        else {
+
+          document.getElementById("obscure").classList.remove('hidden');
+          document.getElementById("resetDisplay").classList.remove('hidden');
+          document.getElementById("searchBar").classList.add('helpHighlight');
+          document.getElementById("searchFoyer").classList.add('helpHighlight');
+          document.getElementById("layoutButton").classList.add('helpHighlight');
+          document.getElementById("helpButton").classList.add('helpHighlight');
+          document.getElementById("headContainer").classList.add('helpHighlight');
+          document.getElementById("title").classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_holder"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_left"]).classList.add('helpHighlight');
+          //document.getElementById([firstNovelID+"_right"]).classList.add('helpHighlight');
+          document.getElementById([firstNovelID+"_right2"]).classList.add('helpHighlight');
+          //document.getElementById("submitLink").classList.add('helpObscure');
+          document.getElementById("subtitle").classList.add('helpObscure');
+
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: 'smooth'
+          });
+
+        }
+
+      }
+
+      function toggleLayout() {
+
+        if (document.querySelector('.cardTile')) {
+          document.querySelectorAll('.cardTile').forEach(function(elem) {
+              elem.classList.remove('cardTile');
+          });
+
+          document.querySelectorAll('.cardOverlay').forEach(function(elem) {
+              elem.classList.add('hidden');
+          });
+
+          document.querySelector('.layoutButton').classList.add('act2');
+        }
+
+        else {
+          document.querySelectorAll('.cardHolder').forEach(function(elem) {
+              elem.classList.add('cardTile');
+          });
+
+          document.querySelectorAll('.cardOverlay').forEach(function(elem) {
+              elem.classList.remove('hidden');
+          });
+
+          document.querySelector('.layoutButton').classList.remove('act2');
+        }
+
+
+        if (document.querySelector('.clicked')) {
+          document.querySelectorAll('.clicked').forEach(function(elem) {
+              elem.classList.remove('clicked');
+          });
+        }
+        if (document.querySelector('.touched')) {
+          document.querySelectorAll('.touched').forEach(function(elem) {
+              elem.classList.remove('touched');
+          });
+        }
+
+        if (document.querySelector('.helpTileTip')) {
+          document.getElementById(firstNovelID + "_left").classList.remove('helpTileTip');
+        }
+        else {
+          document.getElementById(firstNovelID + "_left").classList.add('helpTileTip');
+        }
+
+        onresize();
+
+      }
+
+      //Recalculate tile positions on window load and resize.
+      var onresize = function(e) {
+
+         //note i need to pass the event as an argument to the function (not really)
+
+         width = document.body.clientWidth;
+         widthInner = window.innerWidth;
+
+         if (document.querySelector('.cardTile')) {
+           if (widthInner <= 816) {
+             cardSize = 145 + 8 + 5;
+           }
+           else {
+             cardSize = 260 + 8 + 5;
+           }
+         }
+         else {
+           cardSize = 310 + 8 + 5;
+         }
+
+         cardsOnScreen = Math.floor((width + 5) / (cardSize));
+
+         totalCardCount = document.querySelectorAll('.card').length;
+
+         if (cardsOnScreen < 1) { cardsOnScreen = 1; }
+         if (cardsOnScreen > totalCardCount) { cardsOnScreen = totalCardCount; }
+
+         /////console.log(width + " | " + cardSize + " | " + cardsOnScreen + " | " + totalCardCount);
+
+         /*
+         (Screen Width - Card Size x3 - Text Margin x2 - Set Margin x3)/2
+         */
+         document.getElementsByTagName('style')[0].innerHTML= ".cardContainer {margin-left: calc((100% - " + (cardSize * cardsOnScreen - 6) + "px)/2);}";
+
+      }
+
+      window.addEventListener("resize", onresize);
+
+
+      function searchListener() {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+          ///console.log("Enter press detected.");
+          // Cancel the default action, if needed
+          event.preventDefault();
+          // Trigger the button element with a click
+          document.getElementById("searchBtn").click();
+        }
+      }
+
+      function submitSearch() {
+        var inputText = document.getElementById("searchField").value;
+        document.getElementById('cardContainer').innerHTML = "";
+        searchParams = inputText;
+        initPage(inputText);
+        readDB(true);
+      }
+
+      function refreshDatabase() {
+        var db = openRequest.result;
+        db.close();
+        ///console.log("IDB request closed: refreshing database.")
+        location.reload();
+      }
+
+    </script>
+
+    <noscript><style type="text/css">.cardContainer {opacity: 1};</style></noscript>
+
+    <div class="mainContainer">
+
+      <div class="searchBar tooltip t-top-left" data-tooltip="Search by title, author, tag, or perspective" id="searchBar">
+
+        <input class="searchText" ID="searchField" type="text" placeholder="Submit your search!" onkeyup="searchListener();">
+
+        <div class="searchButton" ID="searchBtn" onclick="submitSearch();">
+          <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+        </div>
+
+      </div>
+
+
+      <div class="searchFoyer" id="searchFoyer">
+
+        <div class="resultOptions">
+
+          <div class="layoutButton tooltip t-left" data-tooltip="Toggle Layout Between Tiles or Cards" id="layoutButton" onclick="toggleLayout();"></div>
+
+          <div class="helpButton tooltip t-right" data-tooltip="Toggle These Help Tooltips" id="helpButton" onclick="toggleHelp();">?</div>
+
+        </div>
+
+      </div>
+
+      <div id="searchErrorText"></div>
+
+      <div class="cardContainer" id="cardContainer">
+
+      </div>
+
+
+    </div>
+
+  </body>
+
+</HTML>
