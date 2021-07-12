@@ -385,11 +385,13 @@
         for (i = 0; i < novelArray.length; i++) {
           if (!novelObject.data.files[novelArray[i]]) {
             console.log(novelArray[i] + " type not found.");
+            console.log(novelObject.data.files[novelArray[i]]);
           }
           else {
             if (novelArray[i]) {
-              if (novelObject.data.files[novelArray[i]] === "")
+              if (novelObject.data.files[novelArray[i]] === "") {
                 dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='files/"+novelObject.id+"-"+novelObject.name+"."+novelArray[i]+"'>Download "+novelArray[i].capitalize()+"</a>");
+              }
               else {
                 dataArray.push("<a class='fileButton' onClick='event.stopPropagation();' href='"+novelObject.data.files[novelArray[i]]+"'>Download "+novelArray[i].capitalize()+"</a>");
               }
