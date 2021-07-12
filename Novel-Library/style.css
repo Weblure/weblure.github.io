@@ -132,7 +132,7 @@ textarea, input {
 }
 .statusMessage {
   display: inline-block;
-  width: calc(100% - 8px);
+  width: calc(100%);
   margin: 0 auto;
   font-family: "Ubuntu Mono", monospace;
   font-size: 18px;
