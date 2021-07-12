@@ -733,7 +733,7 @@ textarea, input {
 }
 .sourceLink {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 310px;
   min-height: 16px;
   padding-top: 3px;
@@ -1571,11 +1571,11 @@ select-items div:hover, .same-as-selected {
   .title span {
     position: relative;
     display: block;
-    top: 12px;
+    top: 0;
     font-size: 125px;
     padding: 0 5px 0 5px;
-    transform: translateY(0) scale(1);
-    color: #393838;
+    transform: translateY(20px) scale(1);
+    color: #212335;
     transition: all .4s;
     margin:-80px;
     margin-top: -90px;
@@ -1586,7 +1586,7 @@ select-items div:hover, .same-as-selected {
     highlight-color: transparent;
   }
   .title:hover span, .title.hover span {
-    transform: translateY(-14px) scale(1);
+    transform: translateY(6px) scale(1);
     color: #4d4f5d;
   }
 
@@ -1614,7 +1614,7 @@ select-items div:hover, .same-as-selected {
     border-radius: 3px;
     position: absolute;
     top: -122px;
-    right: 109px;
+    right: 132px;
   }
   .subtitle.small::before {
     width: 36px;
@@ -1740,6 +1740,10 @@ select-items div:hover, .same-as-selected {
   }
 
 
+  .cardLeft {
+    width: 146px;
+  }
+
   .cardTile.cardHolder {
     width: 145px;
   }
@@ -1751,11 +1755,10 @@ select-items div:hover, .same-as-selected {
   .cardTile .cardTitle {
     width: 145px;
     font-size: 16px;
-    min-height: 45px;
+    min-height: 28px;
   }
   .cardTile .cardTitle span {
     display: inline-block;
-    padding-top: 16px;
   }
   .cardTile .cardTitle span.source {
     padding-top: 24px;
