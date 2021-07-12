@@ -383,7 +383,7 @@
 
         var novelArray = ['scenario', 'story', 'lorebook', 'generationset'];
         for (i = 0; i < novelArray.length; i++) {
-          if (!novelObject.data.files[novelArray[i]]) {
+          if (novelObject.data.files[novelArray[i]] === undefined) {
             console.log(novelArray[i] + " type not found.");
             console.log(novelObject.data.files[novelArray[i]]);
           }
