@@ -211,6 +211,7 @@ textarea, input {
   position: relative;
   display: inline-block;
   top: -6px;
+  margin-left: 1px;
   font-size: 40px;
   padding: 0 5px 0 5px;
   //transform: rotatey(0) translateY(0) scale(1);
