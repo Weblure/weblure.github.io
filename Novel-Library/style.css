@@ -579,7 +579,6 @@ textarea, input {
   display: inline-block;
   width: auto;
   height: 60px;
-  margin:0 5px 0 5px;
   overflow: visible;
 }
 
