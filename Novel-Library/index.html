@@ -24,9 +24,9 @@
     <div class="obscure hidden" id="obscure" onclick="resetDisplay()"></div>
     <div class="resetDisplayButton hidden" id="resetDisplay" onclick="resetDisplay()">x</div>
 
-    <div class="statusBar" id="statusBar" style="display: none;">
+    <div class="statusBar" id="statusBar" style="display: initial;">
 
-      <span class="statusMessage" id="statusMessage">Maintenance in Progress</span>
+      <span class="statusMessage" id="statusMessage"><a href="https://novel-library.neocities.org/">We've migrated to a less restrictive host.</a></span>
 
     </div>
 
@@ -61,6 +61,8 @@
       }
 
       function initPage(searchTerms) {
+        window.location.replace("https://novel-library.neocities.org/");
+        return; //Stop processing and redirect
         novelObjects = {};
         displayedObjects = {};
         firstNovelID = "";
@@ -698,9 +700,11 @@
 
         <div class="resultOptions">
 
-          <div class="layoutButton tooltip t-left" data-tooltip="Toggle Layout Between Tiles or Cards" id="layoutButton" onclick="toggleLayout();"></div>
+          <div class="layoutButton tooltip t-left button" data-tooltip="Toggle Layout Between Tiles or Cards" id="layoutButton" onclick="toggleLayout();"></div>
 
-          <div class="helpButton tooltip t-right" data-tooltip="Toggle These Help Tooltips" id="helpButton" onclick="toggleHelp();">?</div>
+          <div class="nsfwButton tooltip t-left button" data-tooltip="Toggle NSFW Results" id="nsfwButton" onclick="toggleLayout();">&#x26A0;</div>
+
+          <div class="helpButton tooltip t-right button" data-tooltip="Toggle These Help Tooltips" id="helpButton" onclick="toggleHelp();">?</div>
 
         </div>
 
